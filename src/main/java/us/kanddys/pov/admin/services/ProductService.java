@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.web.multipart.MultipartFile;
 import us.kanddys.pov.admin.models.dtos.DifferentProductDTO;
+import us.kanddys.pov.admin.models.dtos.ProductDTO;
 import us.kanddys.pov.admin.models.dtos.ProductImageDTO;
 
 /**
@@ -15,22 +16,16 @@ import us.kanddys.pov.admin.models.dtos.ProductImageDTO;
 public interface ProductService {
 
    /**
-    * Este método tiene la obligación de actualizar un producto.
+    * Este método tiene la obligación de actualizar el frontPage de un producto.
     *
     * @author Igirod0
     * @version 1.0.0
-    * @param productId
-    * @param title
-    * @param price
-    * @param stock
-    * @param status
-    * @param typeOfSale
-    * @param manufacturingTime
-    * @param typeOfPrice
+    * @param valueOf
+    * @param image
     * @return Integer
     */
-   public Integer updateProduct(Long productId, Optional<String> title, Optional<Double> price, Optional<Integer> stock,
-         Optional<Integer> status, Optional<String> typeOfSale);
+   @Modifying
+   public String updateFrontPage(Long productId, MultipartFile image);
 
    /**
     * Este método tiene la obligación de eliminar un producto.
@@ -74,18 +69,14 @@ public interface ProductService {
     * @param sellerQuestionOptions
     * @return Long
     */
-   public DifferentProductDTO createProduct(Optional<MultipartFile> frontPage, Optional<String> title,
+   public ProductDTO createProduct(Optional<MultipartFile> frontPage, Optional<String> title,
          Optional<String> typeOfSale, Optional<String> price, Optional<String> stock, Optional<String> status,
          Optional<String> userId, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
          Optional<String> invenstmentAmount, Optional<String> invenstmentTitle, Optional<String> manufacturingType,
          Optional<String> segmentTitle, Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia,
          Optional<String> hashtagValue, Optional<List<String>> keywordValue, Optional<String> sellerQuestionValue,
          Optional<String> sellerQuestionType, Optional<String> sellerQuestionLimit,
-         Optional<String> sellerQuestionRequired, Optional<String> typeOfPrice,
-         Optional<List<String>> sellerQuestionOptions);
-
-   public Long createProduct(Optional<Long> userId, Optional<Long> productId, String title, String tStock, Double price,
-         Integer stock);
+         Optional<String> sellerQuestionRequired, Optional<List<String>> sellerQuestionOptions);
 
    /**
     * Método que tiene la obligación de asociar un producto a un comerciante.
