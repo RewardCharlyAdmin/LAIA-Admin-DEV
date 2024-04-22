@@ -1,4 +1,4 @@
-package us.kanddys.pov.admin.controller;
+package us.kanddys.pov.admin.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;

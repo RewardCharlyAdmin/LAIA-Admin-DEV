@@ -1,0 +1,6 @@
+type HashtagDTO {
+   id: Int!
+   product: Int!
+   hashtag: String
+   user: Int!
+}

@@ -1,0 +1,6 @@
+#import "./entities/product.graphqls"
+
+type ecommerce {
+   query: Query
+   mutation: Mutation
+}
