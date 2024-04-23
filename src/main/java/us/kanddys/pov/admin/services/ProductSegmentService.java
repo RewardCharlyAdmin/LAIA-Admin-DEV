@@ -44,14 +44,13 @@ public interface ProductSegmentService {
     * @author Igirod0
     * @version 1.0.0
     * @param description
-    * @param frontPage
+    * @param media
     * @param productId
     * @param title
     * @return ProductSegmentDTO
     */
-   public ProductSegmentDTO createProductSegmentFrontPageString(Optional<String> title, Optional<String> frontPage,
-         Long productId,
-         Optional<String> description);
+   public ProductSegmentDTO createProductSegmentMediaString(Optional<String> title, Optional<String> media,
+         Long productId, Optional<String> description);
 
    /**
     * Este método se encarga de obtener el detalle acortado de un producto.

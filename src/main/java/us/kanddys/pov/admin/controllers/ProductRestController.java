@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import us.kanddys.pov.admin.models.dtos.DifferentProductDTO;
+import us.kanddys.pov.admin.models.dtos.DifferentProductMediaDTO;
 import us.kanddys.pov.admin.models.dtos.NewProductDTO;
-import us.kanddys.pov.admin.models.dtos.ProductImageDTO;
+import us.kanddys.pov.admin.models.dtos.ProductDTO;
 import us.kanddys.pov.admin.services.AuxiliarProductService;
 import us.kanddys.pov.admin.services.ProductService;
 
@@ -27,7 +26,7 @@ public class ProductRestController {
 
    @RequestMapping(method = { RequestMethod.POST }, value = "/create", produces = {
          "application/json" }, consumes = { "multipart/form-data" })
-   public DifferentProductDTO createProduct(@RequestPart Optional<MultipartFile> frontPage,
+   public ProductDTO createProduct(@RequestPart Optional<MultipartFile> frontPage,
          @RequestPart Optional<String> userId,
          @RequestPart Optional<String> title, @RequestPart Optional<String> typeOfSale,
          @RequestPart Optional<String> price, @RequestPart Optional<String> stock, @RequestPart Optional<String> status,
@@ -38,13 +37,11 @@ public class ProductRestController {
          @RequestPart Optional<String> hashtagValue, @RequestPart Optional<List<String>> keywordValue,
          @RequestPart Optional<String> sellerQuestionValue, @RequestPart Optional<String> sellerQuestionType,
          @RequestPart Optional<String> sellerQuestionLimit, @RequestPart Optional<String> sellerQuestionRequired,
-         @RequestPart Optional<String> typeOfPrice,
          @RequestPart Optional<List<String>> sellerQuestionOptions) {
       return productService.createProduct(frontPage, title, typeOfSale, price, stock, status,
             userId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue, keywordValue, sellerQuestionValue,
-            sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired, typeOfPrice,
-            sellerQuestionOptions);
+            sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired, sellerQuestionOptions);
    }
 
    @RequestMapping(method = { RequestMethod.POST }, value = "/create-aux", produces = {
@@ -72,9 +69,9 @@ public class ProductRestController {
                   : Optional.empty());
    }
 
-   @RequestMapping(method = { RequestMethod.PUT }, value = "/update-medias", produces = {
+   @RequestMapping(method = { RequestMethod.PATCH }, value = "/update-medias", produces = {
          "application/json" }, consumes = { "multipart/form-data" })
-   public List<ProductImageDTO> updateAdminSellProductMedia(@RequestPart String productId,
+   public List<DifferentProductMediaDTO> updateAdminSellProductMedia(@RequestPart String productId,
          @RequestPart String index, @RequestPart Optional<String> title, @RequestPart Optional<String> price,
          @RequestPart Optional<String> tPrice, @RequestPart Optional<String> stock,
          @RequestPart Optional<String> tStock, @RequestPart List<MultipartFile> newImages,

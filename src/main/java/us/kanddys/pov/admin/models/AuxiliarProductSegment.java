@@ -15,28 +15,22 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-@Table(name = "shoppings")
+@Table(name = "aux_product_segments")
 @Entity
-public class Shopping {
+public class AuxiliarProductSegment {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "buyer_id")
-   private Long buyerId;
-   @Column(name = "merchant_id")
-   private Long merchantId;
-   @Column(name = "day")
-   private Integer day;
-   @Column(name = "month")
-   private Integer month;
-   @Column(name = "year")
-   private Integer year;
-   @Column(name = "count")
-   private Integer count;
-   @Column(name = "total")
-   private Double total;
+   @Column(name = "product")
+   private Long product;
+   @Column(name = "description")
+   private String description;
+   @Column(name = "media")
+   private String media;
+   @Column(name = "title")
+   private String title;
 
-   public Shopping() {
+   public AuxiliarProductSegment() {
    }
 }

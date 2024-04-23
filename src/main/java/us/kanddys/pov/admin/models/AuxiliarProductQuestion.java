@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import us.kanddys.pov.admin.models.utils.enums.QuestionTypeEmun;
 
 /**
  * @author Igirod0
@@ -15,28 +16,24 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-@Table(name = "shoppings")
+@Table(name = "aux_product_questions")
 @Entity
-public class Shopping {
+public class AuxiliarProductQuestion {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "buyer_id")
-   private Long buyerId;
-   @Column(name = "merchant_id")
-   private Long merchantId;
-   @Column(name = "day")
-   private Integer day;
-   @Column(name = "month")
-   private Integer month;
-   @Column(name = "year")
-   private Integer year;
-   @Column(name = "count")
-   private Integer count;
-   @Column(name = "total")
-   private Double total;
+   @Column(name = "product")
+   private Long product;
+   @Column(name = "question")
+   private String question;
+   @Column(name = "type")
+   private QuestionTypeEmun type;
+   @Column(name = "required")
+   private Integer required;
+   @Column(name = "max_limit")
+   private Integer maxLimit;
 
-   public Shopping() {
+   public AuxiliarProductQuestion() {
    }
 }

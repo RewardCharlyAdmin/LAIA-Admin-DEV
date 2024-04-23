@@ -16,7 +16,7 @@ public class ProductMediaDTO {
    @JsonProperty
    private Long id;
    @JsonProperty
-   private Long productId;
+   private Long product;
    @JsonProperty
    private String url;
    @JsonProperty
@@ -35,7 +35,7 @@ public class ProductMediaDTO {
    public ProductMediaDTO(ProductMedia productMedia) {
       super();
       this.id = (productMedia.getId() == null ? null : productMedia.getId());
-      this.productId = (productMedia.getProductId() == null ? null : productMedia.getProductId());
+      this.product = (productMedia.getProduct() == null ? null : productMedia.getProduct());
       this.url = (productMedia.getUrl() == null ? null : productMedia.getUrl());
       this.type = (productMedia.getType() == null ? null : productMedia.getType());
    }

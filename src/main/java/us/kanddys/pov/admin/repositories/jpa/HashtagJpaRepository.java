@@ -13,4 +13,7 @@ public interface HashtagJpaRepository extends JpaRepository<Hashtag, Long> {
 
    @Query("select h from Hashtag h where h.productId = ?1")
    Optional<Hashtag> findByProductId(Long productId);
+
+   @Query(value = "SELECT id FROM hashtags WHERE value = ?1 AND user = ?2", nativeQuery = true)
+   Optional<Long> findIdByValueAndUser(String value, Long user);
 }

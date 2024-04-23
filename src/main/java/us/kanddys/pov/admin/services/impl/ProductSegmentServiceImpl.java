@@ -81,12 +81,12 @@ public class ProductSegmentServiceImpl implements ProductSegmentService {
    }
 
    @Override
-   public ProductSegmentDTO createProductSegmentFrontPageString(Optional<String> title, Optional<String> frontPage,
+   public ProductSegmentDTO createProductSegmentMediaString(Optional<String> title, Optional<String> media,
          Long productId, Optional<String> description) {
       try {
          return new ProductSegmentDTO(
                productSegmentJpaRepository.save(new ProductSegment(null, productId, title.orElse(null),
-                     description.orElse(null), frontPage.orElse(null), "IMAGE")));
+                     description.orElse(null), media.orElse(null), "IMAGE")));
       } catch (IOException e) {
          throw new RuntimeException(e.getMessage());
       }

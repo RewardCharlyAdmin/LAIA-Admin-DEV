@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -19,6 +20,7 @@ import us.kanddys.pov.admin.services.storage.utils.ImageFormat;
  * @author Igirod0
  * @version 1.0.0
  */
+@Service
 public class FirebaseStorageServiceImpl implements FirebaseStorageService {
 
    public String uploadFile(MultipartFile multipartFile, String imageName, String folderName) {

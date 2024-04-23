@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.web.multipart.MultipartFile;
 import us.kanddys.pov.admin.models.dtos.DifferentProductDTO;
+import us.kanddys.pov.admin.models.dtos.DifferentProductMediaDTO;
 import us.kanddys.pov.admin.models.dtos.ProductDTO;
-import us.kanddys.pov.admin.models.dtos.ProductImageDTO;
 
 /**
  * @author Igirod0
@@ -115,7 +115,18 @@ public interface ProductService {
     * @param newImages
     * @return List<ArticleImageDTO>
     */
-   public List<ProductImageDTO> updateAdminSellProductMedia(Long productId, String index, Optional<String> title,
+   public List<DifferentProductMediaDTO> updateAdminSellProductMedia(Long productId, String index,
+         Optional<String> title,
          Optional<String> price, Optional<String> tPrice, Optional<String> stock, Optional<String> tStock,
          List<String> existImages, List<MultipartFile> newImages);
+
+   /**
+    * Método que tiene la obligación de obtener un producto por su id.
+    *
+    * @author Igirod0
+    * @version 1.0.0
+    * @param productId
+    * @return ProductDTO
+    */
+   public ProductDTO getProductById(Long productId);
 }

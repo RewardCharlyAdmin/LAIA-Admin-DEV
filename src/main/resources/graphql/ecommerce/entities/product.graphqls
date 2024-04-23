@@ -1,19 +1,18 @@
 #import "./hashtag.graphqls"
 
 type Query {
-   gAdminSellProduct(productId: Int!): DifferentProduct
+   gAdminSellProduct(productId: Int!): DifferentProductDTO
 }
 
 type Mutation {
-   dProduct(id: Int!): Integer
+   dAdminSellProduct(productId: Int!): Int
 }
 
-type DifferentProduct {
-   id: Int!
+type DifferentProductDTO {
+   productId: Int!
    medias: [String]
    title: String
    price: Float
-   typeOfPrice: String;
    stock: Int
    invenstmentsCount: Int
    hashtag: HashtagDTO

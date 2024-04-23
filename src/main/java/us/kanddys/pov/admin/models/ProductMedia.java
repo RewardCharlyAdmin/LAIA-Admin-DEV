@@ -22,8 +22,8 @@ public class ProductMedia {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "product_id")
-   private Long productId;
+   @Column(name = "product")
+   private Long product;
    @Column(name = "url")
    private String url;
    @Column(name = "type")

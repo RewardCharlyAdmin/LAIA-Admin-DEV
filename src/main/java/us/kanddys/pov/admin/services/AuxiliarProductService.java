@@ -50,4 +50,15 @@ public interface AuxiliarProductService {
          Optional<List<String>> keywordValue, Optional<String> sellerQuestionValue, Optional<String> sellerQuestionType,
          Optional<String> sellerQuestionLimit, Optional<String> sellerQuestionRequired,
          Optional<String> typeOfPrice, Optional<List<String>> sellerQuestionOptions);
+
+   /**
+    * Este método se encarga de subir los medias de un producto auxiliar.
+    * 
+    * @author Igirod0
+    * @version 1.0.0
+    * @param medias
+    * @param productId
+    * @return Integer
+    */
+   public Integer uploadMedias(List<MultipartFile> medias, Long productId);
 }

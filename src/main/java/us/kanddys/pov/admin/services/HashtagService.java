@@ -1,8 +1,5 @@
 package us.kanddys.pov.admin.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import us.kanddys.pov.admin.models.dtos.HashtagDTO;
 
 /**
