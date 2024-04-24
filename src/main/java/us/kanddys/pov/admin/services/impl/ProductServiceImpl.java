@@ -171,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
          Optional<List<String>> keywords, Optional<String> sellerQuestionValue, Optional<String> sellerQuestionType,
          Optional<String> sellerQuestionLimit, Optional<String> sellerQuestionRequired,
          Optional<List<String>> sellerQuestionOptions, Long userId) {
-      // ! PREGUNTAR A MAXI COMO IMPLEMENTAR ESTO.
+      // ! MAS ADELANTE.
       // if (invenstmentAmount.isPresent() || invenstmentNote.isPresent() ||
       // invenstmentTitle.isPresent()) {
       // invenstmentService.createInvenstment(Long.valueOf(productId.get()),

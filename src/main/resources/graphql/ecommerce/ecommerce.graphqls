@@ -1,4 +1,9 @@
 #import "./entities/product.graphqls"
+#import "./entities/calendar.graphqls"
+#import "./entities/batch.graphqls"
+#import "./entities/library.graphqls"
+#import "./entities/librarycollection.graphqls"
+#import "./entities/buyer.graphqls"
 
 type ecommerce {
    query: Query

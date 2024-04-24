@@ -1,0 +1,12 @@
+type Query {
+   gAdminSellCalendar(merchantId: Int!): CalendarDTO
+}
+
+type CalendarDTO {
+   id: Int!
+   delay: Int
+   typeDelay: String
+   disabledDates: [String]
+   workingDays: [String]
+   exceptionsDates: [String]
+}

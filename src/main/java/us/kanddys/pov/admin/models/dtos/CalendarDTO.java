@@ -1,5 +1,7 @@
 package us.kanddys.pov.admin.models.dtos;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -11,18 +13,20 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-public class CollectionMiniatureDTO {
+public class CalendarDTO {
    @JsonProperty
    private Long id;
    @JsonProperty
-   private String[] miniatureProps;
+   private Integer delay;
    @JsonProperty
-   private String[] miniatureHeader;
+   private String typeDelay;
    @JsonProperty
-   private String[] miniatureSubtitle;
+   private Set<String> disabledDates;
    @JsonProperty
-   private String[] miniatureTitle;
+   private Set<String> workingDays;
+   @JsonProperty
+   private Set<String> exceptionsDates;
 
-   public CollectionMiniatureDTO() {
+   public CalendarDTO() {
    }
 }

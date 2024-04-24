@@ -1,0 +1,55 @@
+type Query {
+   gCollectionOrder(collectionId: Int!, libraryId: Int!, userId: Int!) : LibraryCollectionOrderDTO
+   gCollectionMiniature(userId: Int!, libraryId: Int!, collectionId: Int!) : LibraryCollectionMiniatureDTO
+   gCollectionConfiguration(userId: Int!, collectionId: Int!, libraryId: Int!) : LibraryCollectionConfigurationDTO
+}
+
+type Mutation {
+   uCollectionOrder(collection: Int!, ascDsc: Int!, orderProps: String) : Int
+   uCollectionRename(collection: Int!, title: String!, library: Int!) : Int
+   dCollection(collectionId: Int!) : Int
+   uCollectionMiniature(collectionId: Int!, miniatureHeader: String!, miniatureTitle: String!, miniatureSubtitle: String!) : Int
+   dCollection(collectionId: Int!) : Int
+}
+
+type LibraryCollectionOrderDTO {
+   title: String
+   ascDsc: String
+   operation: Int
+   orderProps: [String]
+}
+
+type LibraryCollectionOrderDTO {
+   title: String
+   ascDsc: Int
+   opeartion: Int
+   orderProps: [String]
+}
+
+type LibraryCollectionMiniatureDTO {
+   title: String
+   operation: Int
+   collection: CollectionMiniatureDTO
+}
+
+type CollectionMiniatureDTO {
+   id: Int
+   miniatureProps: [String]
+   miniatureHeader: [String]
+   miniatureTitle: [String]
+   miniatureSubtitle: [String]
+}
+
+type LibraryCollectionConfigurationDTO {
+   title: String
+   conf: Int
+   ascDsc: Int
+   order: String
+   filter: LibraryCollectionFilterDTO
+   operation: Int
+}
+
+type LibraryCollectionFilterDTO {
+   id: Int
+   alias: String
+}

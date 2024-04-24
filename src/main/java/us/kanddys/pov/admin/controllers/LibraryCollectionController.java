@@ -14,7 +14,7 @@ import us.kanddys.pov.admin.models.dtos.LibraryCollectionOrderDTO;
 import us.kanddys.pov.admin.services.LibraryCollectionService;
 
 @Controller
-public class LibraryController {
+public class LibraryCollectionController {
    @Autowired
    private LibraryCollectionService libraryCollectionService;
 
