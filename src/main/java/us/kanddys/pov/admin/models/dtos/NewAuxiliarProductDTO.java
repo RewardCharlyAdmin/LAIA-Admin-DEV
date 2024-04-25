@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-public class NewProductDTO {
+public class NewAuxiliarProductDTO {
    @JsonProperty
    private Long productId;
    @JsonProperty
@@ -21,6 +21,6 @@ public class NewProductDTO {
    @JsonProperty
    private ProductImageDTO segmentMedia;
 
-   public NewProductDTO() {
+   public NewAuxiliarProductDTO() {
    }
 }

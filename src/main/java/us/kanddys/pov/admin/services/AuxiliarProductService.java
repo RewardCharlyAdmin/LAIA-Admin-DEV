@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import us.kanddys.pov.admin.models.dtos.NewProductDTO;
+import us.kanddys.pov.admin.models.dtos.NewAuxiliarProductDTO;
 
 /**
  * @author Igirod0
@@ -41,15 +41,14 @@ public interface AuxiliarProductService {
     * @param typeOfPrice
     * @return Integer
     */
-   public NewProductDTO createAuxiliarProduct(Optional<List<MultipartFile>> medias, Optional<String> title,
-         Optional<String> typeOfSale, Optional<String> price, Optional<String> stock, Optional<String> status,
-         Optional<String> userId,
-         Optional<String> manufacturingTime, Optional<String> invenstmentNote, Optional<String> invenstmentAmount,
-         Optional<String> invenstmentTitle, Optional<String> manufacturingType, Optional<String> segmentTitle,
-         Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia, Optional<String> hashtagValue,
-         Optional<List<String>> keywordValue, Optional<String> sellerQuestionValue, Optional<String> sellerQuestionType,
-         Optional<String> sellerQuestionLimit, Optional<String> sellerQuestionRequired,
-         Optional<String> typeOfPrice, Optional<List<String>> sellerQuestionOptions);
+   public NewAuxiliarProductDTO createAuxiliarProduct(Optional<List<MultipartFile>> medias, Optional<String> title,
+         Optional<String> tStock, Optional<String> price, Optional<String> stock, Optional<String> status,
+         Optional<String> userId, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
+         Optional<String> invenstmentAmount, Optional<String> invenstmentTitle, Optional<String> manufacturingType,
+         Optional<String> segmentTitle, Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia,
+         Optional<String> hashtagValue, Optional<List<String>> keywordValue, Optional<String> sellerQuestionValue,
+         Optional<String> sellerQuestionType, Optional<String> sellerQuestionLimit,
+         Optional<String> sellerQuestionRequired, Optional<List<String>> sellerQuestionOptions);
 
    /**
     * Este método se encarga de subir los medias de un producto auxiliar.

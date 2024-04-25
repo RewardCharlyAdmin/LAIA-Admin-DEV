@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import us.kanddys.pov.admin.models.dtos.NewProductDTO;
+import us.kanddys.pov.admin.models.dtos.NewAuxiliarProductDTO;
 import us.kanddys.pov.admin.services.AuxiliarProductService;
 
 @RestController
@@ -30,9 +30,9 @@ public class AuxiliarProductRestController {
 
    @RequestMapping(method = { RequestMethod.POST }, value = "/create-aux", produces = {
          "application/json" }, consumes = { "multipart/form-data" })
-   public NewProductDTO createAuxiliarProduct(@RequestPart Optional<List<MultipartFile>> medias,
+   public NewAuxiliarProductDTO createAuxiliarProduct(@RequestPart Optional<List<MultipartFile>> medias,
          @RequestPart Optional<String> userId,
-         @RequestPart Optional<String> title, @RequestPart Optional<String> typeOfSale,
+         @RequestPart Optional<String> title, @RequestPart Optional<String> tStock,
          @RequestPart Optional<String> price, @RequestPart Optional<String> stock, @RequestPart Optional<String> status,
          @RequestPart Optional<String> manufacturingTime, @RequestPart Optional<String> invenstmentNote,
          @RequestPart Optional<String> invenstmentAmount, @RequestPart Optional<String> invenstmentTitle,
@@ -41,14 +41,13 @@ public class AuxiliarProductRestController {
          @RequestPart Optional<String> hashtagValue, @RequestPart Optional<String> keywords,
          @RequestPart Optional<String> sellerQuestionValue, @RequestPart Optional<String> sellerQuestionType,
          @RequestPart Optional<String> sellerQuestionLimit, @RequestPart Optional<String> sellerQuestionRequired,
-         @RequestPart Optional<String> typeOfPrice,
          @RequestPart Optional<String> sellerQuestionOptions) {
-      return auxiliarProductService.createAuxiliarProduct(medias, title, typeOfSale, price, stock, status,
+      return auxiliarProductService.createAuxiliarProduct(medias, title, tStock, price, stock, status,
             userId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue,
             (keywords.isPresent()) ? Optional.of(List.of(keywords.get().split("♀")))
                   : Optional.empty(),
-            sellerQuestionValue, sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired, typeOfPrice,
+            sellerQuestionValue, sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired,
             (sellerQuestionOptions.isPresent()) ? Optional.of(List.of(sellerQuestionOptions.get().split("♀")))
                   : Optional.empty());
    }
