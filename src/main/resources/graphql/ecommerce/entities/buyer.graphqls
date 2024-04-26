@@ -1,13 +1,3 @@
-type Query {
-   gBuyer(buyerId: Int!) : BuyerDTO
-}
-
-type Mutation {
-   cBuyer(merchantId: Int!, name: String, email: String, phone: String, count: Int, date: String) : Int
-   uBuyer(buyerId: Int!, name: String, email: String, phone: String, count: Int, date: String) : Int
-   dBuyer(buyerId: Int!) : Int
-}
-
 type BuyerDTO {
    id: Int!
    merchantId: Int

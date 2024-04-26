@@ -1,6 +1,7 @@
 package us.kanddys.pov.admin.models.dtos;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,7 +19,7 @@ public class DifferentProductDTO {
    @JsonProperty
    private Long productId;
    @JsonProperty
-   private List<String> medias;
+   private Set<String> medias;
    @JsonProperty
    private String title;
    @JsonProperty
@@ -32,7 +33,7 @@ public class DifferentProductDTO {
    @JsonProperty
    private Integer segments;
    @JsonProperty
-   private ManufacturingTypeEnum manufacturingType;
+   private String manufacturingType;
    @JsonProperty
    private Integer manufacturing;
    @JsonProperty

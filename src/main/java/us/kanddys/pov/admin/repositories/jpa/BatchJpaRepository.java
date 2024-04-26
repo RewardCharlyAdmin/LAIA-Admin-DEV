@@ -1,7 +1,7 @@
 package us.kanddys.pov.admin.repositories.jpa;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +24,13 @@ public interface BatchJpaRepository extends JpaRepository<Batch, Long> {
 
    @Query(value = "SELECT * FROM batches WHERE calendar_id = ?1 AND days LIKE %?2% AND date IS NULL", nativeQuery = true)
    Set<Batch> findByCalendarIdAndDaysContainingAndDateIsNull(Long calendarId, Integer days);
+
+   @Query(value = "SELECT CAST(from_value AS CHAR), CAST(to_value AS CHAR) FROM batches WHERE id = :id", nativeQuery = true)
+   Map<String, String> findFromTimeAndToTimeById(Long id);
+
+   @Query(value = "SELECT * FROM batches WHERE calendar_id = ?1 AND date BETWEEN ?2 AND ?3 AND date IS NOT NULL", nativeQuery = true)
+   Set<Batch> findExceptionlBatchesByCalendarId(Long calendarId, Date startDate, Date endDate);
+
+   @Query(value = "SELECT * FROM batches WHERE calendar_id = ?1 AND date IS NULL", nativeQuery = true)
+   Set<Batch> findNormalBatchesByCalendarId(Long calendarId);
 }

@@ -1,0 +1,64 @@
+type CompleteInvoiceDTO {
+   cli: CompleteInvoiceClientDTO
+   merchant: CompleteInvoiceMerchantDTO
+   articles: [CompleteInvoiceProductDTO]
+   direction: CompleteInvoiceDirectionDTO
+   calendar: CompleteInvoiceCalendarDTO
+   message: String
+   operation: Int
+}
+
+type InvoiceReservationDTO {
+   batchId: Int
+   batchFrom: String
+   batchTo: String
+   reservation: String
+}
+
+type CompleteInvoiceMerchantDTO {
+   id: Int!
+   title: String
+   email: String
+   phone: String
+}
+
+type CompleteInvoiceClientDTO {
+   id: Int
+   name: String
+   surname: String
+   email: String
+   phone: String
+   media: String
+}
+
+type CompleteInvoiceCalendarDTO{
+   tReservation: String
+   reservation: String
+   day: Int
+   month: Int
+   year: Int
+   from: String
+   to: String
+}
+
+type CompleteInvoiceProductDTO {
+   id: Int
+   productCount: Int
+   productPrice: Float
+   productTitle: String
+   productUnit: String
+   productMedia: String
+}
+
+type CompleteInvoiceDirectionDTO {
+   code: String
+   country: String
+   state: String
+   city: String
+   street: String
+   number: String
+   ref: String
+   note: String
+   lat: String
+   lng: String
+}

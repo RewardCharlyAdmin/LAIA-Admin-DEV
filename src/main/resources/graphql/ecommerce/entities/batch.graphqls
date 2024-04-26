@@ -1,13 +1,3 @@
-type Query {
-   gBatches(calendarId: Int!, day: String!, date: String!, exceptionalDate: Int): [BatchDTO]
-}
-
-type Mutation {
-   cBatch(calendarId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
-   uBatch(batchId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
-   dBatch(batchId: Int!): Int
-}
-
 type BatchDTO {
    id: ID!
    calendarId: Int

@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import us.kanddys.pov.admin.models.utils.enums.StockTypeEnum;
 
 /**
  * @author Igirod0
@@ -15,20 +16,26 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-@Table(name = "aux_product_keywords")
+@Table(name = "invoice_products")
 @Entity
-public class AuxiliarProductKeyword {
+public class InvoiceProduct {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "keyword")
-   private String keyword;
-   @Column(name = "auxiliar_product_id")
-   private Long auxiliarProductId;
-   @Column(name = "merchant")
-   private Long merchant;
+   @Column(name = "invoice")
+   private Long invoice;
+   @Column(name = "title")
+   private String title;
+   @Column(name = "price")
+   private Double price;
+   @Column(name = "media")
+   private String media;
+   @Column(name = "count")
+   private Integer count;
+   @Column(name = "count_type")
+   private StockTypeEnum countType;
 
-   public AuxiliarProductKeyword() {
+   public InvoiceProduct() {
    }
 }

@@ -1,13 +1,5 @@
 #import "./hashtag.graphqls"
 
-type Query {
-   gAdminSellProduct(productId: Int!): DifferentProductDTO
-}
-
-type Mutation {
-   dAdminSellProduct(productId: Int!): Int
-}
-
 type DifferentProductDTO {
    productId: Int!
    medias: [String]

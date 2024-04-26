@@ -15,20 +15,20 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-@Table(name = "aux_product_keywords")
+@Table(name = "aux_products_medias")
 @Entity
-public class AuxiliarProductKeyword {
+public class AuxiliarProductMedia {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "keyword")
-   private String keyword;
-   @Column(name = "auxiliar_product_id")
-   private Long auxiliarProductId;
-   @Column(name = "merchant")
-   private Long merchant;
+   @Column(name = "product")
+   private Long product;
+   @Column(name = "media")
+   private String media;
+   @Column(name = "media_type")
+   private String type;
 
-   public AuxiliarProductKeyword() {
+   public AuxiliarProductMedia() {
    }
 }

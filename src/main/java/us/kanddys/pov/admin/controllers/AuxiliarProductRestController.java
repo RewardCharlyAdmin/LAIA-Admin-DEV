@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -21,14 +20,7 @@ public class AuxiliarProductRestController {
    @Autowired
    private AuxiliarProductService auxiliarProductService;
 
-   @RequestMapping(method = { RequestMethod.POST }, value = "/upload-medias", produces = {
-         "application/json" }, consumes = { "multipart/form-data" })
-   public ResponseEntity<Integer> uploadMedias(@RequestPart("medias") List<MultipartFile> medias,
-         @RequestPart("productId") Long productId) {
-      return ResponseEntity.ok(auxiliarProductService.uploadMedias(medias, productId));
-   }
-
-   @RequestMapping(method = { RequestMethod.POST }, value = "/create-aux", produces = {
+   @RequestMapping(method = { RequestMethod.POST }, value = "/create", produces = {
          "application/json" }, consumes = { "multipart/form-data" })
    public NewAuxiliarProductDTO createAuxiliarProduct(@RequestPart Optional<List<MultipartFile>> medias,
          @RequestPart Optional<String> userId,
@@ -39,16 +31,16 @@ public class AuxiliarProductRestController {
          @RequestPart Optional<String> manufacturingType, @RequestPart Optional<String> segmentTitle,
          @RequestPart Optional<String> segmentDescription, @RequestPart Optional<MultipartFile> segmentMedia,
          @RequestPart Optional<String> hashtagValue, @RequestPart Optional<String> keywords,
-         @RequestPart Optional<String> sellerQuestionValue, @RequestPart Optional<String> sellerQuestionType,
-         @RequestPart Optional<String> sellerQuestionLimit, @RequestPart Optional<String> sellerQuestionRequired,
-         @RequestPart Optional<String> sellerQuestionOptions) {
+         @RequestPart Optional<String> productQuestionValue, @RequestPart Optional<String> productQuestionType,
+         @RequestPart Optional<String> productQuestionLimit, @RequestPart Optional<String> productQuestionRequired,
+         @RequestPart Optional<String> productQuestionOptions) {
       return auxiliarProductService.createAuxiliarProduct(medias, title, tStock, price, stock, status,
             userId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue,
             (keywords.isPresent()) ? Optional.of(List.of(keywords.get().split("♀")))
                   : Optional.empty(),
-            sellerQuestionValue, sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired,
-            (sellerQuestionOptions.isPresent()) ? Optional.of(List.of(sellerQuestionOptions.get().split("♀")))
+            productQuestionValue, productQuestionType, productQuestionLimit, productQuestionRequired,
+            (productQuestionOptions.isPresent()) ? Optional.of(List.of(productQuestionOptions.get().split("♀")))
                   : Optional.empty());
    }
 }

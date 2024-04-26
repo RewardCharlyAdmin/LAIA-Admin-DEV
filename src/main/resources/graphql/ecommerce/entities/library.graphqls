@@ -1,13 +1,3 @@
-type Query {
-   gLibraryConf(libraryId: Int!, userId: Int!) : LibraryConfigDTO
-   gLibraryMiniatures(libraryId: Int!, userId: Int!) : LibraryMiniatureDTO
-}
-
-type Mutation {
-   uLibraryRename(libraryId: Int!, title: String!, userId: Int!) : Int
-   uLibraryMiniatures(libraryId: Int!, miniatureHeader: String!, miniatureTitle: String!, miniatureSubtitle: String!) : Int
-}
-
 type LibraryConfigDTO {
    type: Int
    conf: Int

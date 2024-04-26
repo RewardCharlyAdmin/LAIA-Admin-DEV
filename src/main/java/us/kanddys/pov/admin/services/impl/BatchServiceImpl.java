@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import us.kanddys.pov.admin.models.Batch;
 import us.kanddys.pov.admin.models.dtos.BatchDTO;
@@ -23,6 +24,7 @@ import us.kanddys.pov.admin.services.utils.TimeUtils;
  * @author Igirod0
  * @version 1.0.0
  */
+@Service
 public class BatchServiceImpl implements BatchService {
 
    @Autowired

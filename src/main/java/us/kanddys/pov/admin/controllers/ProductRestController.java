@@ -30,13 +30,13 @@ public class ProductRestController {
          @RequestPart Optional<String> manufacturingType, @RequestPart Optional<String> segmentTitle,
          @RequestPart Optional<String> segmentDescription, @RequestPart Optional<MultipartFile> segmentMedia,
          @RequestPart Optional<String> hashtagValue, @RequestPart Optional<List<String>> keywordValue,
-         @RequestPart Optional<String> sellerQuestionValue, @RequestPart Optional<String> sellerQuestionType,
-         @RequestPart Optional<String> sellerQuestionLimit, @RequestPart Optional<String> sellerQuestionRequired,
-         @RequestPart Optional<List<String>> sellerQuestionOptions) {
+         @RequestPart Optional<String> productQuestionValue, @RequestPart Optional<String> productQuestionType,
+         @RequestPart Optional<String> productQuestionLimit, @RequestPart Optional<String> productQuestionRequired,
+         @RequestPart Optional<List<String>> productQuestionOptions) {
       return productService.createProduct(frontPage, title, typeOfSale, price, stock, status,
             userId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
-            segmentTitle, segmentDescription, segmentMedia, hashtagValue, keywordValue, sellerQuestionValue,
-            sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired, sellerQuestionOptions);
+            segmentTitle, segmentDescription, segmentMedia, hashtagValue, keywordValue, productQuestionValue,
+            productQuestionType, productQuestionLimit, productQuestionRequired, productQuestionOptions);
    }
 
    @RequestMapping(method = { RequestMethod.PATCH }, value = "/update-medias", produces = {

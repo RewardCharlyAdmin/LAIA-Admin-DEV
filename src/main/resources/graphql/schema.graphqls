@@ -1,4 +1,4 @@
-#import "./ecommerce/ecommerce.graphqls"
+#import "./entities/ecommerce.graphqls"
 
 type schema {
    query: Query

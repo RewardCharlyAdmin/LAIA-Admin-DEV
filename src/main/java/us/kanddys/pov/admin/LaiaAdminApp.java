@@ -9,5 +9,4 @@ public class LaiaAdminApp {
    public static void main(String[] args) {
       SpringApplication.run(LaiaAdminApp.class, args);
    }
-
 }

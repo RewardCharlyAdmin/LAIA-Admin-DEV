@@ -24,8 +24,8 @@ public class Keyword {
    private Long id;
    @Column(name = "keyword")
    private String keyword;
-   @Column(name = "user")
-   private Long user;
+   @Column(name = "merchant")
+   private Long merchant;
    @Column(name = "product")
    private Long product;
 

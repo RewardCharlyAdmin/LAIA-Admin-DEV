@@ -2,8 +2,10 @@ package us.kanddys.pov.admin.services.impl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -299,7 +301,7 @@ public class ProductServiceImpl implements ProductService {
          throw new ProductNotFoundException(ExceptionMessage.PRODUCT_NOT_FOUND);
       DifferentProductDTO differentProductDTO = new DifferentProductDTO();
       differentProductDTO.setProductId(productId);
-      List<String> medias = new ArrayList<String>();
+      Set<String> medias = new HashSet<String>();
       String frontPage = (productDTO.getFrontPage() != null ? productDTO.getFrontPage() : null);
       if (frontPage != null)
          medias.add(frontPage);
@@ -312,7 +314,7 @@ public class ProductServiceImpl implements ProductService {
             .setManufacturing((productDTO.getManufacturing() != null ? productDTO.getManufacturing()
                   : null));
       differentProductDTO.setManufacturingType(
-            (productDTO.getManufacturingType() != null ? productDTO.getManufacturingType() : null));
+            (productDTO.getManufacturingType() != null ? productDTO.getManufacturingType().toString() : null));
       differentProductDTO.setTitle((productDTO.getTitle() != null ? productDTO.getTitle() : null));
       differentProductDTO.setPrice((productDTO.getPrice() != null ? productDTO.getPrice() : null));
       differentProductDTO.setStock((productDTO.getStock() != null ? productDTO.getStock() : null));

@@ -1,0 +1,37 @@
+#import "./entities/product.graphqls"
+#import "./entities/calendar.graphqls"
+#import "./entities/batch.graphqls"
+#import "./entities/library.graphqls"
+#import "./entities/librarycollection.graphqls"
+#import "./entities/buyer.graphqls"
+#import "./entities/invoice.graphqls"
+
+type Query {
+   gBuyer(buyerId: Int!): BuyerDTO
+   gAdminSellCalendar(merchantId: Int!): CalendarDTO
+   gAdminSellInvoice(invoiceId: Int!): CompleteInvoiceDTO
+   gAdminSellInvoiceReservation(invoiceId: Int!): InvoiceReservationDTO
+   gLibraryConf(libraryId: Int!, userId: Int!) : LibraryConfigDTO
+   gLibraryMiniatures(libraryId: Int!, userId: Int!) : LibraryMiniatureDTO
+   gCollectionOrder(collectionId: Int!, libraryId: Int!, userId: Int!) : LibraryCollectionOrderDTO
+   gCollectionMiniature(userId: Int!, libraryId: Int!, collectionId: Int!) : LibraryCollectionMiniatureDTO
+   gCollectionConfiguration(userId: Int!, collectionId: Int!, libraryId: Int!) : LibraryCollectionConfigurationDTO
+   gBatches(calendarId: Int!, day: String!, date: String!, exceptionalDate: Int): [BatchDTO]
+   gAdminSellProduct(productId: Int!): DifferentProductDTO
+}
+
+type Mutation {
+   uCollectionOrder(collection: Int!, ascDsc: Int!, orderProps: String) : Int
+   uCollectionRename(collection: Int!, title: String!, library: Int!) : Int
+   uCollectionMiniature(collectionId: Int!, miniatureHeader: String!, miniatureTitle: String!, miniatureSubtitle: String!) : Int
+   dCollection(collectionId: Int!) : Int
+   uLibraryRename(libraryId: Int!, title: String!, userId: Int!) : Int
+   uLibraryMiniatures(libraryId: Int!, miniatureHeader: String!, miniatureTitle: String!, miniatureSubtitle: String!) : Int
+   cBuyer(merchantId: Int!, name: String, email: String, phone: String, count: Int, date: String) : Int
+   uBuyer(buyerId: Int!, name: String, email: String, phone: String, count: Int, date: String) : Int
+   dBuyer(buyerId: Int!) : Int
+   cBatch(calendarId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
+   uBatch(batchId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
+   dBatch(batchId: Int!): Int
+   dAdminSellProduct(productId: Int!): Int
+}
