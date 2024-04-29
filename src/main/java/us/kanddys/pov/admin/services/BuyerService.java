@@ -22,19 +22,21 @@ public interface BuyerService {
     * @author Igirod0
     * @version 1.0.0
     */
-   public Long cBuyer(Long merchantId, String email, String name, String surname, String phone, Integer count,
-         String media);
+   public Long cAdminBuyer(Long merchantId, Optional<String> email, Optional<String> name, Optional<String> surname,
+         Optional<String> phone, Optional<Integer> count, Optional<String> media, Optional<Integer> pickUp,
+         Optional<Integer> delivery);
 
    /**
     * @author Igirod0
     * @version 1.0.0
     */
-   public Integer uBuyer(Long buyerId, Optional<String> email, Optional<String> name, Optional<String> surname,
-         Optional<String> phone, Optional<Integer> count, Optional<String> media);
+   public Integer uAdminBuyer(Long id, Optional<String> email, Optional<String> name, Optional<String> surname,
+         Optional<String> phone, Optional<Integer> count, Optional<String> media, Optional<Integer> pickUp,
+         Optional<Integer> delivery);
 
    /**
     * @author Igirod0
     * @version 1.0.0
     */
-   public Integer dBuyer(Long buyerId);
+   public Integer dAdminBuyer(Long id);
 }

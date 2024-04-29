@@ -13,6 +13,6 @@ import us.kanddys.pov.admin.models.ProductQuestion;
 @Repository
 public interface ProductQuestionJpaRepository extends JpaRepository<ProductQuestion, Long> {
 
-   @Query(value = "SELECT COUNT(*) FROM product_questions WHERE product_id = ?1", nativeQuery = true)
+   @Query(value = "SELECT COUNT(*) FROM product_questions WHERE product = ?1", nativeQuery = true)
    public Integer countQuestionsByProductId(Long productId);
 }

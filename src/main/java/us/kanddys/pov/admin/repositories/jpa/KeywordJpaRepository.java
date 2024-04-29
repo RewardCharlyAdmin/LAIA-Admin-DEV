@@ -9,6 +9,6 @@ import us.kanddys.pov.admin.models.Keyword;
 @Repository
 public interface KeywordJpaRepository extends JpaRepository<Keyword, Long> {
 
-   @Query(value = "SELECT COUNT(*) FROM keywords_products WHERE product_id = ?1", nativeQuery = true)
+   @Query(value = "SELECT COUNT(*) FROM keywords WHERE product = ?1", nativeQuery = true)
    public Integer countKeyWordProductByProductId(Long productId);
 }

@@ -12,6 +12,6 @@ import us.kanddys.pov.admin.models.DisabledDate;
 @Repository
 public interface DisabledDateJpaRepository extends JpaRepository<DisabledDate, Long> {
 
-   @Query(value = "SELECT CAST(e.date AS CHAR) FROM disabled_dates e WHERE calendar_id = ?3 AND e.date BETWEEN ?1 AND ?2", nativeQuery = true)
+   @Query(value = "SELECT CAST(e.date AS CHAR) FROM disables e WHERE calendar = ?3 AND e.date BETWEEN ?1 AND ?2", nativeQuery = true)
    Set<String> findDisabedDatesByCalendarIdRange(Date startDate, Date endDate, Long calendarId);
 }

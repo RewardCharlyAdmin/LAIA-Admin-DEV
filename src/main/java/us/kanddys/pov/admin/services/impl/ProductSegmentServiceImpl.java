@@ -76,7 +76,7 @@ public class ProductSegmentServiceImpl implements ProductSegmentService {
 
    @Override
    public ProductSegmentShortDTO getProductSegmentShort(Long productId) {
-      return new ProductSegmentShortDTO(productSegmentShortJpaRepository.findProductDetailsByProductId(productId)
+      return new ProductSegmentShortDTO(productSegmentShortJpaRepository.findProductSegmentsByProductId(productId)
             .orElseThrow(() -> new ProductNotFoundException(ExceptionMessage.PRODUCT_NOT_FOUND)));
    }
 

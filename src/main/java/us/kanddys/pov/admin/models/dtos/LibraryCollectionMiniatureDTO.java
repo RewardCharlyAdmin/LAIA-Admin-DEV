@@ -13,7 +13,7 @@ public class LibraryCollectionMiniatureDTO {
    @JsonProperty
    private Integer operation;
    @JsonProperty("collection")
-   private CollectionMiniatureDTO collectionMiniature;
+   private CollectionMiniatureDTO collection;
 
    public LibraryCollectionMiniatureDTO() {
    }

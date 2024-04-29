@@ -14,9 +14,9 @@ public interface ProductSegmentJpaRepository extends JpaRepository<ProductSegmen
 
    public List<ProductSegment> findProductDetailsByProductId(Long productId);
 
-   @Query(value = "SELECT COUNT(*) FROM products_details WHERE product_id = ?1", nativeQuery = true)
+   @Query(value = "SELECT COUNT(*) FROM products_segments WHERE product = ?1", nativeQuery = true)
    public Integer countProductDetailsByProductId(Long productId);
 
-   @Query(value = "SELECT url, type FROM products_details WHERE product_id = ?1 ORDER BY id DESC LIMIT 1", nativeQuery = true)
+   @Query(value = "SELECT url, type FROM products_segments WHERE product = ?1 ORDER BY id DESC LIMIT 1", nativeQuery = true)
    public Map<String, Object> findLastProductDetailByProductId(Long productId);
 }

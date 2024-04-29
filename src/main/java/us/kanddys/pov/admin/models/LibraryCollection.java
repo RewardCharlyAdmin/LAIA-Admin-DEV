@@ -22,7 +22,7 @@ public class LibraryCollection {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "library_id")
+   @Column(name = "library")
    private Long libraryId;
    @Column(name = "miniature_header")
    private String miniatureHeader;

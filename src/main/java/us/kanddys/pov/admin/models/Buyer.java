@@ -41,8 +41,10 @@ public class Buyer {
    private Date date;
    @Column(name = "media")
    private String media;
-   @Column(name = "total")
-   private Double total;
+   @Column(name = "pick_up")
+   private Integer pickUp;
+   @Column(name = "delivery")
+   private Integer delivery;
 
    public Buyer() {
    }

@@ -10,29 +10,37 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import us.kanddys.pov.admin.models.utils.enums.CalendarTypeEnum;
+import us.kanddys.pov.admin.models.utils.enums.AmountTypeEnum;
 
 /**
  * @author Igirod0
  * @version 1.0.0
  */
-@Data
 @AllArgsConstructor
+@Data
+@Table(name = "payments")
 @Entity
-@Table(name = "calendars")
-public class Calendar {
+public class Payment {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
+   @Column(name = "title")
+   private String title;
+   @Column(name = "cvu")
+   private String cvu;
+   @Column(name = "email")
+   private String email;
+   @Column(name = "amount")
+   private Double amount;
+   @Enumerated(value = EnumType.STRING)
+   @Column(name = "amount_type")
+   private AmountTypeEnum amountType;
+   @Column(name = "payment")
+   private String payment;
    @Column(name = "merchant")
    private Long merchant;
-   @Column(name = "delay")
-   private Integer delay;
-   @Enumerated(EnumType.STRING)
-   @Column(name = "delay_type")
-   private CalendarTypeEnum delayType;
 
-   public Calendar() {
+   public Payment() {
    }
 }

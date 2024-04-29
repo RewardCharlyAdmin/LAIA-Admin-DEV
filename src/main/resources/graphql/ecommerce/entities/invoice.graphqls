@@ -1,7 +1,7 @@
 type CompleteInvoiceDTO {
    cli: CompleteInvoiceClientDTO
    merchant: CompleteInvoiceMerchantDTO
-   articles: [CompleteInvoiceProductDTO]
+   products: [CompleteInvoiceProductDTO]
    direction: CompleteInvoiceDirectionDTO
    calendar: CompleteInvoiceCalendarDTO
    message: String

@@ -1,13 +1,11 @@
 package us.kanddys.pov.admin.models.dtos;
 
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import us.kanddys.pov.admin.models.utils.enums.ManufacturingTypeEnum;
 
 /**
  * @author Igirod0

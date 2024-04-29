@@ -1,5 +1,6 @@
 package us.kanddys.pov.admin.services.impl;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import us.kanddys.pov.admin.exceptions.BuyerNotFoundException;
 import us.kanddys.pov.admin.exceptions.utils.ExceptionMessage;
 import us.kanddys.pov.admin.models.Buyer;
 import us.kanddys.pov.admin.models.dtos.BuyerDTO;
+import us.kanddys.pov.admin.models.utils.DateUtils;
 import us.kanddys.pov.admin.repositories.jpa.BuyerJpaRepository;
 import us.kanddys.pov.admin.services.BuyerService;
 
@@ -29,24 +31,26 @@ public class BuyerServiceImpl implements BuyerService {
    }
 
    @Override
-   public Long cBuyer(Long merchantId, String email, String name, String surname, String phone, Integer count,
-         String media) {
-      Buyer buyer = new Buyer();
-      buyer.setMerchantId(merchantId);
-      buyer.setEmail(email);
-      buyer.setName(name);
-      buyer.setSurname(surname);
-      buyer.setPhone(phone);
-      buyer.setCount(count);
-      buyer.setMedia(media);
-      buyerJpaRepository.save(buyer);
-      return buyer.getId();
+   public Long cAdminBuyer(Long merchant, Optional<String> email, Optional<String> name, Optional<String> surname,
+         Optional<String> phone, Optional<Integer> count,
+         Optional<String> media, Optional<Integer> pickUp,
+         Optional<Integer> delivery) {
+      try {
+         return buyerJpaRepository
+               .save(new Buyer(null, merchant, email.orElse(null), name.orElse(null), surname.orElse(null),
+                     phone.orElse(null), count.orElse(0), DateUtils.getCurrentDateWitheoutTime(), media.orElse(null),
+                     pickUp.orElse(0), delivery.orElse(0)))
+               .getId();
+      } catch (ParseException e) {
+         throw new RuntimeException("Error al convertir la fecha");
+      }
    }
 
    @Override
-   public Integer uBuyer(Long buyerId, Optional<String> email, Optional<String> name, Optional<String> surname,
-         Optional<String> phone, Optional<Integer> count, Optional<String> media) {
-      Buyer buyerToUpdate = buyerJpaRepository.findById(buyerId)
+   public Integer uAdminBuyer(Long id, Optional<String> email, Optional<String> name, Optional<String> surname,
+         Optional<String> phone, Optional<Integer> count, Optional<String> media, Optional<Integer> pickUp,
+         Optional<Integer> delivery) {
+      Buyer buyerToUpdate = buyerJpaRepository.findById(id)
             .orElseThrow(() -> new BuyerNotFoundException(ExceptionMessage.BUYER_NOT_FOUND));
       email.ifPresent(buyerToUpdate::setEmail);
       name.ifPresent(buyerToUpdate::setName);
@@ -54,16 +58,15 @@ public class BuyerServiceImpl implements BuyerService {
       phone.ifPresent(buyerToUpdate::setPhone);
       count.ifPresent(buyerToUpdate::setCount);
       media.ifPresent(buyerToUpdate::setMedia);
+      pickUp.ifPresent(buyerToUpdate::setPickUp);
+      delivery.ifPresent(buyerToUpdate::setDelivery);
       buyerJpaRepository.save(buyerToUpdate);
       return 1;
    }
 
    @Override
-   public Integer dBuyer(Long buyerId) {
-      Long buyerIdToDelete = buyerJpaRepository.findById(buyerId)
-            .orElseThrow(() -> new BuyerNotFoundException(ExceptionMessage.BUYER_NOT_FOUND))
-            .getId();
-      buyerJpaRepository.deleteById(buyerIdToDelete);
+   public Integer dAdminBuyer(Long id) {
+      buyerJpaRepository.deleteById(id);
       return 1;
    }
 }

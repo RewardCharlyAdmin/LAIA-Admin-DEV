@@ -12,13 +12,13 @@ import us.kanddys.pov.admin.models.Shopping;
 @Repository
 public interface ShoppingJpaRepository extends JpaRepository<Shopping, Long> {
 
-   @Query("SELECT buyerId as buyerId, sum(total) as total FROM Shopping WHERE buyerId IN :itemBuyerIds GROUP BY buyerId")
+   @Query("SELECT id as buyerId, sum(total) as total FROM Shopping WHERE buyerId IN :itemBuyerIds GROUP BY buyerId")
    List<Map<String, Object>> findTotalMaxByBuyerIds(List<Long> itemBuyerIds);
 
-   @Query("SELECT buyerId as buyerId, sum(count) as count FROM Shopping WHERE buyerId IN :itemBuyerIds GROUP BY buyerId")
+   @Query("SELECT id as buyerId, sum(count) as count FROM Shopping WHERE buyerId IN :itemBuyerIds GROUP BY buyerId")
    List<Map<String, Object>> findCountMaxByBuyerIds(List<Long> itemBuyerIds);
 
-   @Query("SELECT buyerId as buyerId, sum(count) as count FROM Shopping WHERE buyerId IN :itemBuyerIds GROUP BY buyerId ORDER BY count DESC")
+   @Query("SELECT id as buyerId, sum(count) as count FROM Shopping WHERE buyerId IN :itemBuyerIds GROUP BY buyerId ORDER BY count DESC")
    List<Map<String, Object>> findMaxCountCountByBuyerIds(List<Long> itemBuyerIds);
 
    @Query(value = "SELECT MAX(total) as valueMax, MIN(total) as valueMin FROM shoppings", nativeQuery = true)

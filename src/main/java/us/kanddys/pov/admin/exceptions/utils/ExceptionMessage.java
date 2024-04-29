@@ -36,4 +36,5 @@ public class ExceptionMessage {
    public static final String USER_NOT_AUTHORIZED = "El usuario no esta autorizado para realizar esta accion.";
    public static final String BUYER_NOT_FOUND = "El comprador buscado no existe.";
    public static final String LIBRARY_USER_NOT_EQUAL = "El usuario de la biblioteca no es igual al usuario pasado por parametro.";
+   public static final String PAYMENT_NOT_FOUND = "El pago buscado no existe.";
 }

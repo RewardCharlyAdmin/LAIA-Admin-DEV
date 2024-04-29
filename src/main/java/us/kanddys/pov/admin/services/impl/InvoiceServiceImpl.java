@@ -266,4 +266,11 @@ public class InvoiceServiceImpl implements InvoiceService {
    public InvoiceReservationDTO gAdminSellInvoiceReservation(Long merchantId, Set<Long> invoiceArticlesIds) {
       return invoiceReservationService.getInvoiceReservation(merchantId, invoiceArticlesIds);
    }
+
+   @Override
+   public Integer uAdminSellInvoiceStatus(Long invoice, String status) {
+      invoiceJpaRepository.updateInvoiceStatus(invoice, status);
+      return 1;
+   }
+
 }

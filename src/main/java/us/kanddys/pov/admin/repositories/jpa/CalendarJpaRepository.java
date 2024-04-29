@@ -11,6 +11,6 @@ import us.kanddys.pov.admin.models.Calendar;
 @Repository
 public interface CalendarJpaRepository extends JpaRepository<Calendar, Long> {
 
-   @Query(value = "SELECT c.delay_type as type, c.delay as delay, c.id as id FROM calendar c WHERE c.merchant = ?1", nativeQuery = true)
+   @Query(value = "SELECT c.delay_type as type, c.delay as delay, c.id as id FROM calendars c WHERE c.merchant = ?1", nativeQuery = true)
    Map<String, Object> findTypeAndDelayAndCalendarIdByMerchantId(Long merchantId);
 }

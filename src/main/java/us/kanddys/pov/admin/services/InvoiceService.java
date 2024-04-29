@@ -35,4 +35,10 @@ public interface InvoiceService {
     * @version 1.0.0
     */
    public InvoiceReservationDTO gAdminSellInvoiceReservation(Long merchantId, Set<Long> articlesIds);
+
+   /**
+    * @author Igirod0
+    * @version 1.0.0
+    */
+   public Integer uAdminSellInvoiceStatus(Long invoice, String status);
 }

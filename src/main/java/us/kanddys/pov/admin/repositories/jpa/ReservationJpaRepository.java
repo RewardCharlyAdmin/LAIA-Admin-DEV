@@ -17,6 +17,6 @@ import us.kanddys.pov.admin.models.Reservation;
 @Repository
 public interface ReservationJpaRepository extends JpaRepository<Reservation, Long> {
 
-   @Query(value = "SELECT batch_id, COUNT(*), CAST(Date as CHAR) FROM reservations WHERE batch_id IN :batchIds AND `date` BETWEEN :startDate AND :endDate GROUP BY date", nativeQuery = true)
+   @Query(value = "SELECT batch, COUNT(*), CAST(Date as CHAR) FROM reservations WHERE batch IN :batchIds AND `date` BETWEEN :startDate AND :endDate GROUP BY date", nativeQuery = true)
    Set<Object[]> countRecordsByBatchIdsAndDate(List<Long> batchIds, Date startDate, Date endDate);
 }

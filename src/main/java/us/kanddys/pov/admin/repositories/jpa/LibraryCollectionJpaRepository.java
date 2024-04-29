@@ -26,13 +26,13 @@ public interface LibraryCollectionJpaRepository extends JpaRepository<LibraryCol
    public Integer updateMiniaturesByLibraryCollectionsIds(List<Long> libraryCollections, String miniatureHeader,
          String miniatureTitle, String miniatureSubtitle);
 
-   @Query(value = "SELECT id FROM collections WHERE title = ?2 AND id != ?1 AND library_id = ?3", nativeQuery = true)
+   @Query(value = "SELECT id FROM collections WHERE title = ?2 AND id != ?1 AND library = ?3", nativeQuery = true)
    public Optional<Long> existLibraryCollectionWithLibraryIdAndTitleAndNotLibraryCollectionId(Long collectionId,
          String title, Long libraryId);
 
-   @Query(value = "SELECT count(*) FROM collections WHERE library_id = ?1", nativeQuery = true)
+   @Query(value = "SELECT count(*) FROM collections WHERE library = ?1", nativeQuery = true)
    public Integer countByLibraryId(Long libraryId);
 
-   @Query(value = "SELECT count(*) FROM collections WHERE library_id = ?1 AND title LIKE %?2%", nativeQuery = true)
+   @Query(value = "SELECT count(*) FROM collections WHERE library = ?1 AND title LIKE %?2%", nativeQuery = true)
    public Integer countByLibraryIdAndTitle(Long libraryId, String title);
 }

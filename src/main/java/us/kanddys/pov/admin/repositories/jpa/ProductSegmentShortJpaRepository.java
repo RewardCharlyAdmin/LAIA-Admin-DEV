@@ -10,5 +10,5 @@ import us.kanddys.pov.admin.models.ProductSegmentShort;
 @Repository
 public interface ProductSegmentShortJpaRepository extends JpaRepository<ProductSegmentShort, Long> {
 
-   Optional<ProductSegmentShort> findProductDetailsByProductId(Long productId);
+   Optional<ProductSegmentShort> findProductSegmentsByProductId(Long productId);
 }

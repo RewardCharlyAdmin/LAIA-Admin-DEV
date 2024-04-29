@@ -31,19 +31,23 @@ public class BuyerDTO {
    @JsonProperty
    private Integer count;
    @JsonProperty
+   private String date;
+   @JsonProperty
+   private String media;
+   @JsonProperty
+   private Integer pickUp;
+   @JsonProperty
+   private Integer delivery;
+   @JsonProperty
+   private Integer operation;
+   @JsonProperty
+   private Double total;
+   @JsonProperty
    private Integer countArticle;
    @JsonProperty
    private Integer countArticleTotal;
    @JsonProperty
    private Double totalMax;
-   @JsonProperty
-   private Double total;
-   @JsonProperty
-   private String date;
-   @JsonProperty
-   private String media;
-   @JsonProperty
-   private Integer operation;
 
    public BuyerDTO() {
    }
@@ -66,6 +70,8 @@ public class BuyerDTO {
       this.count = (buyer.getCount() != null) ? buyer.getCount() : null;
       this.date = (buyer.getDate() != null) ? DateUtils.convertDateToStringWithoutTime(buyer.getDate()) : null;
       this.media = (buyer.getMedia() != null) ? buyer.getMedia() : null;
+      this.pickUp = (buyer.getPickUp() != null) ? buyer.getPickUp() : null;
+      this.delivery = (buyer.getDelivery() != null) ? buyer.getDelivery() : null;
       this.operation = operation;
    }
 
@@ -86,6 +92,8 @@ public class BuyerDTO {
       this.phone = (buyerAtributtes.get("phone") != null ? (String) buyerAtributtes.get("phone") : null);
       this.count = (buyerAtributtes.get("count") != null ? (Integer) buyerAtributtes.get("count") : null);
       this.total = (buyerAtributtes.get("total") != null ? (Double) buyerAtributtes.get("total") : null);
+      this.pickUp = (buyerAtributtes.get("pickUp") != null ? (Integer) buyerAtributtes.get("pickUp") : null);
+      this.delivery = (buyerAtributtes.get("delivery") != null ? (Integer) buyerAtributtes.get("delivery") : null);
       this.countArticle = (buyerAtributtes.get("count_article") != null ? (Integer) buyerAtributtes.get("count_article")
             : null);
       this.countArticleTotal = (buyerAtributtes.get("count_article_total") != null
@@ -109,6 +117,7 @@ public class BuyerDTO {
       this.count = (buyer.getCount() != null) ? buyer.getCount() : null;
       this.date = (buyer.getDate() != null) ? DateUtils.convertDateToStringWithoutTime(buyer.getDate()) : null;
       this.media = (buyer.getMedia() != null) ? buyer.getMedia() : null;
-      this.totalMax = (buyer.getTotal() != null) ? buyer.getTotal() : null;
+      this.pickUp = (buyer.getPickUp() != null) ? buyer.getPickUp() : null;
+      this.delivery = (buyer.getDelivery() != null) ? buyer.getDelivery() : null;
    }
 }
