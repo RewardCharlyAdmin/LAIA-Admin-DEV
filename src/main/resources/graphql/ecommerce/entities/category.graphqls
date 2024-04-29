@@ -1,0 +1,7 @@
+type CategoryDTO {
+   id: Int!
+   merchant: Int!
+   category: String
+   created: String
+   updated: String
+}

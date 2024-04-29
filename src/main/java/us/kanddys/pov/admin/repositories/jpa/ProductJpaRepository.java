@@ -1,6 +1,5 @@
 package us.kanddys.pov.admin.repositories.jpa;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

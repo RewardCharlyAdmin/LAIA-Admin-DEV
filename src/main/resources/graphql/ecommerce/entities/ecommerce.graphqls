@@ -5,6 +5,7 @@
 #import "./entities/librarycollection.graphqls"
 #import "./entities/buyer.graphqls"
 #import "./entities/invoice.graphqls"
+#import "./entities/category.graphqls"
 
 type Query {
    gBuyer(buyerId: Int!): BuyerDTO
@@ -18,6 +19,7 @@ type Query {
    gCollectionConfiguration(userId: Int!, collectionId: Int!, libraryId: Int!) : LibraryCollectionConfigurationDTO
    gBatches(calendarId: Int!, day: String!, date: String!, exceptionalDate: Int): [BatchDTO]
    gAdminSellProduct(productId: Int!): DifferentProductDTO
+   gAdminCategoryProducts(id: Int!): [ProductDTO]
 }
 
 type Mutation {
@@ -34,4 +36,10 @@ type Mutation {
    uBatch(batchId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
    dBatch(batchId: Int!): Int
    dAdminSellProduct(productId: Int!): Int
+   cAdminCategory(category: String, merchant: Int!): Int
+   uAdminCategory(id: Int!, category: String!): Int
+   dAdminCategory(id: Int!): Int
+   aAdminProductCategory(id: Int!, products: [Int]!): Int
+   uAdminProductCategory(id: Int!, products: [Int]!): Int
+   dAdminProductCategory(id: Int!): Int
 }

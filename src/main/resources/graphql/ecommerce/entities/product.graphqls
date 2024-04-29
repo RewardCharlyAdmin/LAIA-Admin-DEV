@@ -1,5 +1,21 @@
 #import "./hashtag.graphqls"
 
+type ProductDTO {
+   id: Int!
+   userId: Int
+   frontPage: String
+   title: String
+   price: Float
+   stock: Int
+   stockType: String
+   manufacturingType: String
+   manufacturing: Int
+   createAt: String
+   updatedAt: String
+   status: Int
+   sales: Int
+}
+
 type DifferentProductDTO {
    productId: Int!
    medias: [String]
