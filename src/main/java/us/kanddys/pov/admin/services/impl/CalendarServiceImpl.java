@@ -13,6 +13,7 @@ import us.kanddys.pov.admin.models.utils.DateUtils;
 import us.kanddys.pov.admin.repositories.jpa.BatchJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.CalendarJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.DisabledDateJpaRepository;
+import us.kanddys.pov.admin.repositories.jpa.ExceptionJpaRepository;
 import us.kanddys.pov.admin.services.CalendarService;
 
 @Service
@@ -27,6 +28,9 @@ public class CalendarServiceImpl implements CalendarService {
    @Autowired
    private BatchJpaRepository batchJpaRepository;
 
+   @Autowired
+   private ExceptionJpaRepository exceptionJpaRepository;
+
    @Transactional(rollbackOn = { Exception.class, RuntimeException.class })
    @Override
    public CalendarDTO getCalendarByMerchantId(Integer year, Integer month, Integer day, Long merchantId) {
@@ -39,7 +43,7 @@ public class CalendarServiceImpl implements CalendarService {
                disabledDateJpaRepository.findDisabedDatesByCalendarIdRange(
                      DateUtils.convertStringToDateWithoutTime(startDate), endDate, calendarId),
                CalendarDay.getDays(batchJpaRepository.findDaysByCalendarId(calendarId)),
-               batchJpaRepository.findExceptionBatchesDatesByCalendarIdAndDateNotNull(calendarId,
+               exceptionJpaRepository.findExceptionsDatesByCalendarIdAndDateNotNull(calendarId,
                      DateUtils.convertStringToDateWithoutTime(startDate), endDate));
       } catch (ParseException e) {
          throw new RuntimeException("Error al convertir la fecha");

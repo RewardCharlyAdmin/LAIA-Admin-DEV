@@ -30,6 +30,6 @@ public class HashtagDTO {
       this.id = (hashtag.getId() == null) ? null : hashtag.getId();
       this.product = (hashtag.getProductId() == null) ? null : hashtag.getProductId();
       this.hashtag = (hashtag.getHashtag() == null) ? null : hashtag.getHashtag();
-      this.user = (hashtag.getUserId() == null) ? null : hashtag.getUserId();
+      this.user = (hashtag.getMerchant() == null) ? null : hashtag.getMerchant();
    }
 }

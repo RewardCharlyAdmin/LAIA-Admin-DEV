@@ -12,7 +12,7 @@ import us.kanddys.pov.admin.models.ProductSegment;
 @Repository
 public interface ProductSegmentJpaRepository extends JpaRepository<ProductSegment, Long> {
 
-   public List<ProductSegment> findProductDetailsByProductId(Long productId);
+   public List<ProductSegment> findProductDetailsByProduct(Long productId);
 
    @Query(value = "SELECT COUNT(*) FROM products_segments WHERE product = ?1", nativeQuery = true)
    public Integer countProductDetailsByProductId(Long productId);

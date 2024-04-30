@@ -15,22 +15,18 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-@Table(name = "product_segments")
+@Table(name = "aux_product_categories")
 @Entity
-public class ProductSegment {
+public class AuxiliarProductCategory {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "product")
-   private Long product;
+   @Column(name = "aux_product")
+   private Long auxProduct;
    @Column(name = "title")
    private String title;
-   @Column(name = "description")
-   private String description;
-   @Column(name = "media")
-   private String media;
 
-   public ProductSegment() {
+   public AuxiliarProductCategory() {
    }
 }

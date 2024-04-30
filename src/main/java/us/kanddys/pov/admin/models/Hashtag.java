@@ -26,8 +26,8 @@ public class Hashtag {
    private Long productId;
    @Column(name = "hashtag")
    private String hashtag;
-   @Column(name = "user")
-   private Long userId;
+   @Column(name = "merchant")
+   private Long merchant;
 
    public Hashtag() {
    }

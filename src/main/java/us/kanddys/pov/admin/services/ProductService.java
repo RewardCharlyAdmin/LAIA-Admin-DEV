@@ -34,18 +34,13 @@ public interface ProductService {
     */
    public ProductDTO createProduct(Optional<MultipartFile> frontPage, Optional<String> title,
          Optional<String> tStock, Optional<String> price, Optional<String> stock, Optional<String> status,
-         Optional<String> userId, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
+         String merchantId, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
          Optional<String> invenstmentAmount, Optional<String> invenstmentTitle, Optional<String> manufacturingType,
          Optional<String> segmentTitle, Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia,
          Optional<String> hashtagValue, Optional<List<String>> keywordValue, Optional<String> productQuestionValue,
          Optional<String> productQuestionType, Optional<String> productQuestionLimit,
-         Optional<String> productQuestionRequired, Optional<List<String>> productQuestionOptions);
-
-   /**
-    * @author Igirod0
-    * @version 1.0.0
-    */
-   public Long updateAdminSellAssociation(Long productId, Long userId);
+         Optional<String> productQuestionRequired, Optional<List<String>> productQuestionOptions,
+         Optional<String> categoryTitle);
 
    /**
     * @author Igirod0

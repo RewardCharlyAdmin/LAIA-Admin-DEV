@@ -28,8 +28,8 @@ public class Product {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "user")
-   private Long userId;
+   @Column(name = "merchant")
+   private Long merchant;
    @Column(name = "front_page")
    private String frontPage;
    @Column(name = "title")

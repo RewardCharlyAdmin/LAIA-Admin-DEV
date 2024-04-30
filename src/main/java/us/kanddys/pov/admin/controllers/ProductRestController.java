@@ -22,8 +22,8 @@ public class ProductRestController {
    @RequestMapping(method = { RequestMethod.POST }, value = "/create", produces = {
          "application/json" }, consumes = { "multipart/form-data" })
    public ProductDTO createProduct(@RequestPart Optional<MultipartFile> frontPage,
-         @RequestPart Optional<String> userId,
-         @RequestPart Optional<String> title, @RequestPart Optional<String> typeOfSale,
+         @RequestPart String merchantId,
+         @RequestPart Optional<String> title, @RequestPart Optional<String> tStock,
          @RequestPart Optional<String> price, @RequestPart Optional<String> stock, @RequestPart Optional<String> status,
          @RequestPart Optional<String> manufacturingTime, @RequestPart Optional<String> invenstmentNote,
          @RequestPart Optional<String> invenstmentAmount, @RequestPart Optional<String> invenstmentTitle,
@@ -32,11 +32,11 @@ public class ProductRestController {
          @RequestPart Optional<String> hashtagValue, @RequestPart Optional<List<String>> keywordValue,
          @RequestPart Optional<String> productQuestionValue, @RequestPart Optional<String> productQuestionType,
          @RequestPart Optional<String> productQuestionLimit, @RequestPart Optional<String> productQuestionRequired,
-         @RequestPart Optional<List<String>> productQuestionOptions) {
-      return productService.createProduct(frontPage, title, typeOfSale, price, stock, status,
-            userId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
+         @RequestPart Optional<List<String>> productQuestionOptions, @RequestPart Optional<String> categoryTitle) {
+      return productService.createProduct(frontPage, title, tStock, price, stock, status,
+            merchantId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue, keywordValue, productQuestionValue,
-            productQuestionType, productQuestionLimit, productQuestionRequired, productQuestionOptions);
+            productQuestionType, productQuestionLimit, productQuestionRequired, productQuestionOptions, categoryTitle);
    }
 
    @RequestMapping(method = { RequestMethod.PATCH }, value = "/update-medias", produces = {

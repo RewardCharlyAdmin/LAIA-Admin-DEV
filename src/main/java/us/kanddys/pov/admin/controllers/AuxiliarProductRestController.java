@@ -23,9 +23,9 @@ public class AuxiliarProductRestController {
    @RequestMapping(method = { RequestMethod.POST }, value = "/create", produces = {
          "application/json" }, consumes = { "multipart/form-data" })
    public NewAuxiliarProductDTO createAuxiliarProduct(@RequestPart Optional<List<MultipartFile>> medias,
-         @RequestPart Optional<String> userId,
-         @RequestPart Optional<String> title, @RequestPart Optional<String> tStock,
-         @RequestPart Optional<String> price, @RequestPart Optional<String> stock, @RequestPart Optional<String> status,
+         @RequestPart Optional<String> merchant, @RequestPart Optional<String> title,
+         @RequestPart Optional<String> tStock, @RequestPart Optional<String> price, @RequestPart Optional<String> stock,
+         @RequestPart Optional<String> status,
          @RequestPart Optional<String> manufacturingTime, @RequestPart Optional<String> invenstmentNote,
          @RequestPart Optional<String> invenstmentAmount, @RequestPart Optional<String> invenstmentTitle,
          @RequestPart Optional<String> manufacturingType, @RequestPart Optional<String> segmentTitle,
@@ -33,14 +33,15 @@ public class AuxiliarProductRestController {
          @RequestPart Optional<String> hashtagValue, @RequestPart Optional<String> keywords,
          @RequestPart Optional<String> productQuestionValue, @RequestPart Optional<String> productQuestionType,
          @RequestPart Optional<String> productQuestionLimit, @RequestPart Optional<String> productQuestionRequired,
-         @RequestPart Optional<String> productQuestionOptions) {
+         @RequestPart Optional<String> productQuestionOptions, @RequestPart Optional<String> categoryTitle) {
       return auxiliarProductService.createAuxiliarProduct(medias, title, tStock, price, stock, status,
-            userId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
+            merchant, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue,
             (keywords.isPresent()) ? Optional.of(List.of(keywords.get().split("♀")))
                   : Optional.empty(),
             productQuestionValue, productQuestionType, productQuestionLimit, productQuestionRequired,
             (productQuestionOptions.isPresent()) ? Optional.of(List.of(productQuestionOptions.get().split("♀")))
-                  : Optional.empty());
+                  : Optional.empty(),
+            categoryTitle);
    }
 }

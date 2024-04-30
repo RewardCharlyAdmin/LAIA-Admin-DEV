@@ -21,7 +21,7 @@ public interface CategoryService {
     * @author Igirod0
     * @version 1.0.0
     */
-   public Integer cAdminCategory(String category, Long merchant);
+   public Long cAdminCategory(String category, Long merchant);
 
    /**
     * @author Igirod0
@@ -57,4 +57,10 @@ public interface CategoryService {
     * @version 1.0.0
     */
    public Integer dAdminProductCategory(Long id);
+
+   /**
+    * @author Igirod0
+    * @version 1.0.0
+    */
+   public Long getCategoryIdByTitle(String string);
 }

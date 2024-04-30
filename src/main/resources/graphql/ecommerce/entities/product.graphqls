@@ -2,7 +2,7 @@
 
 type ProductDTO {
    id: Int!
-   userId: Int
+   merchant: Int
    frontPage: String
    title: String
    price: Float

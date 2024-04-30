@@ -18,4 +18,7 @@ public interface AuxiliarProductKeywordJpaRepository extends JpaRepository<Auxil
    @Modifying
    @Query(value = "DELETE FROM aux_products_key_words WHERE aux_product_id = ?1", nativeQuery = true)
    void deleteWordsByProductId(Long productId);
+
+   @Query(value = "SELECT keyword FROM aux_product_keywords WHERE product = ?1", nativeQuery = true)
+   List<String> findKeywordsByIds(List<Long> byProduct);
 }

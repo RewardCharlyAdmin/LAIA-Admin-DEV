@@ -1,7 +1,6 @@
 package us.kanddys.pov.admin.models;
 
 import java.sql.Time;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,15 +24,13 @@ public class Batch {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "calendar_id")
+   @Column(name = "calendar")
    private Long calendarId;
-   @Column(name = "date")
-   private Date date;
-   @Column(name = "days")
+   @Column(name = "in_days")
    private Integer days;
-   @Column(name = "from_time")
+   @Column(name = "from_value")
    private Time from;
-   @Column(name = "to_time")
+   @Column(name = "to_value")
    private Time to;
    @Column(name = "max_limit")
    private Integer limit;

@@ -43,7 +43,7 @@ public class ProductSegmentServiceImpl implements ProductSegmentService {
 
    @Override
    public List<ProductSegmentDTO> getProductSegmentsByProductId(Long productId) {
-      return productSegmentJpaRepository.findProductDetailsByProductId(productId).stream().map(t -> {
+      return productSegmentJpaRepository.findProductDetailsByProduct(productId).stream().map(t -> {
          try {
             return new ProductSegmentDTO(t);
          } catch (IOException e) {
@@ -67,8 +67,7 @@ public class ProductSegmentServiceImpl implements ProductSegmentService {
                            ? firebaseStorageService.uploadFile(frontPage.get(),
                                  "product-detail-" + productId.toString() + "-" + UUID.randomUUID().toString(),
                                  "imageProducts")
-                           : null,
-                     "IMAGE")));
+                           : null)));
       } catch (IOException e) {
          throw new RuntimeException(e.getMessage());
       }
@@ -86,7 +85,7 @@ public class ProductSegmentServiceImpl implements ProductSegmentService {
       try {
          return new ProductSegmentDTO(
                productSegmentJpaRepository.save(new ProductSegment(null, productId, title.orElse(null),
-                     description.orElse(null), media.orElse(null), "IMAGE")));
+                     description.orElse(null), media.orElse(null))));
       } catch (IOException e) {
          throw new RuntimeException(e.getMessage());
       }

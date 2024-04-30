@@ -28,8 +28,8 @@ type Mutation {
    dCollection(collectionId: Int!) : Int
    uLibraryRename(libraryId: Int!, title: String!, userId: Int!) : Int
    uLibraryMiniatures(libraryId: Int!, miniatureHeader: String!, miniatureTitle: String!, miniatureSubtitle: String!) : Int
-   cBatch(calendarId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
-   uBatch(batchId: Int!, days: Int, date: String, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
+   cBatch(calendarId: Int!, days: Int, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
+   uBatch(batchId: Int!, days: Int, fromTime: String, toTime: String, maxLimit: Int, title: String): Int
    dBatch(batchId: Int!): Int
    dAdminSellProduct(productId: Int!): Int
    cAdminCategory(category: String, merchant: Int!): Int
@@ -38,8 +38,8 @@ type Mutation {
    aAdminProductCategory(id: Int!, products: [Int]!): Int
    uAdminProductCategory(id: Int!, products: [Int]!): Int
    dAdminProductCategory(id: Int!): Int
-   cAdminPayment(title: String, cvu: String, email: String, amount: String, amountType: String, payment: String, merchant: Int!): Int
-   uAdminPayment(id: Int!, title: String, cvu: String, email: String, amount: String, amountType: String, payment: String): Int
+   cAdminPayment(title: String, cvu: String, email: String, amount: Float, amountType: String, payment: String, merchant: Int!): Int
+   uAdminPayment(id: Int!, title: String, cvu: String, email: String, amount: Float, amountType: String, payment: String): Int
    dAdminPayment(id: Int!): Int
    cAdminBuyer(name: String, surname: String, email: String, phone: String, count: Int, media: String, merchant: Int!, pickUp: Int, delivery: Int): Int
    uAdminBuyer(id: Int!, name: String, surname: String, email: String, phone: String, count: Int, media: String, pickUp: Int, delivery: Int): Int

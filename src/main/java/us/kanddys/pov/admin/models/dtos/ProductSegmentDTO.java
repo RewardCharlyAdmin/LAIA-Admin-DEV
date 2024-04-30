@@ -21,16 +21,14 @@ public class ProductSegmentDTO {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "product_id")
-   private Long productId;
+   @Column(name = "product")
+   private Long product;
    @Column(name = "title")
    private String title;
    @Column(name = "description")
    private String description;
-   @Column(name = "url")
-   private String url;
-   @Column(name = "type")
-   private String type;
+   @Column(name = "media")
+   private String media;
 
    public ProductSegmentDTO() {
    }
@@ -46,8 +44,7 @@ public class ProductSegmentDTO {
       this.id = (ProductSegment.getId() == null) ? null : ProductSegment.getId();
       this.title = (ProductSegment.getTitle() != null) ? ProductSegment.getTitle() : null;
       this.description = (ProductSegment.getDescription() != null) ? ProductSegment.getDescription() : null;
-      this.productId = (ProductSegment.getProductId() != null) ? ProductSegment.getProductId() : null;
-      this.url = (ProductSegment.getUrl() != null) ? ProductSegment.getUrl() : null;
-      this.type = (ProductSegment.getType() != null) ? ProductSegment.getType() : null;
+      this.product = (ProductSegment.getProduct() != null) ? ProductSegment.getProduct() : null;
+      this.media = (ProductSegment.getMedia() != null) ? ProductSegment.getMedia() : null;
    }
 }

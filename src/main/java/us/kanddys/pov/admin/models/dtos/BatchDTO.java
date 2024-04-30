@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import us.kanddys.pov.admin.models.Batch;
+import us.kanddys.pov.admin.models.Exception;
+import us.kanddys.pov.admin.models.utils.DateUtils;
 
 /**
  * @author Igirod0
@@ -27,6 +29,8 @@ public class BatchDTO {
    private String to;
    @JsonProperty
    private String title;
+   @JsonProperty
+   private Long exceptionId;
 
    public BatchDTO() {
    }
@@ -44,7 +48,22 @@ public class BatchDTO {
       this.from = (batch.getFrom() == null) ? null : batch.getFrom().toString();
       this.to = (batch.getTo() == null) ? null : batch.getTo().toString();
       this.title = (batch.getTitle() == null) ? null : batch.getTitle();
-      this.date = (batch.getDate() == null) ? null : batch.getDate().toString();
       this.limit = (batch.getLimit() == null) ? null : batch.getLimit();
+   }
+
+   /**
+    * @author Igirod0
+    * @version 1.0.0
+    */
+   public BatchDTO(Exception exception) {
+      super();
+      this.id = null;
+      this.exceptionId = (exception.getId() == null) ? null : exception.getId();
+      this.calendarId = (exception.getCalendar() == null) ? null : exception.getCalendar();
+      this.from = (exception.getFromValue() == null) ? null : exception.getFromValue().toString();
+      this.to = (exception.getToValue() == null) ? null : exception.getToValue().toString();
+      this.title = (exception.getTitle() == null) ? null : exception.getTitle();
+      this.date = (exception.getDate() == null) ? null : DateUtils.convertDateToStringWithoutTime(exception.getDate());
+      this.limit = (exception.getMaxLimit() == null) ? null : exception.getMaxLimit();
    }
 }

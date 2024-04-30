@@ -24,7 +24,7 @@ public class CategoryController {
    }
 
    @MutationMapping
-   public Integer cAdminCategory(@Argument String category, @Argument Long merchant) {
+   public Long cAdminCategory(@Argument String category, @Argument Long merchant) {
       return categoryService.cAdminCategory(category, merchant);
    }
 

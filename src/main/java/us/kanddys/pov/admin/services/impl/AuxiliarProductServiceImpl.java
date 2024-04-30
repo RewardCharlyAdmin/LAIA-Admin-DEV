@@ -12,24 +12,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import us.kanddys.pov.admin.exceptions.ProductNotFoundException;
+import us.kanddys.pov.admin.exceptions.utils.ExceptionMessage;
 import us.kanddys.pov.admin.models.AuxiliarMultipleQuestionOption;
 import us.kanddys.pov.admin.models.AuxiliarProduct;
+import us.kanddys.pov.admin.models.AuxiliarProductCategory;
 import us.kanddys.pov.admin.models.AuxiliarProductKeyword;
 import us.kanddys.pov.admin.models.AuxiliarProductMedia;
 import us.kanddys.pov.admin.models.AuxiliarProductQuestion;
+import us.kanddys.pov.admin.models.Hashtag;
+import us.kanddys.pov.admin.models.Product;
 import us.kanddys.pov.admin.models.ProductMedia;
 import us.kanddys.pov.admin.models.dtos.NewAuxiliarProductDTO;
 import us.kanddys.pov.admin.models.dtos.ProductDTO;
 import us.kanddys.pov.admin.models.dtos.ProductImageDTO;
 import us.kanddys.pov.admin.models.utils.DateUtils;
 import us.kanddys.pov.admin.repositories.jpa.AuxiliarMultipleQuestionOptionJpaRepository;
+import us.kanddys.pov.admin.repositories.jpa.AuxiliarProductCategoryJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.AuxiliarProductJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.AuxiliarProductKeywordJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.AuxiliarProductMediaJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.AuxiliarProductQuestionJpaRepository;
+import us.kanddys.pov.admin.repositories.jpa.AuxiliarProductSegmentJpaRepository;
+import us.kanddys.pov.admin.repositories.jpa.HashtagJpaRepository;
+import us.kanddys.pov.admin.repositories.jpa.ProductJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.ProductMediaJpaRepository;
 import us.kanddys.pov.admin.repositories.jpa.ProductSegmentJpaRepository;
 import us.kanddys.pov.admin.services.AuxiliarProductService;
+import us.kanddys.pov.admin.services.CategoryService;
+import us.kanddys.pov.admin.services.KeywordService;
+import us.kanddys.pov.admin.services.ProductQuestionService;
+import us.kanddys.pov.admin.services.ProductSegmentService;
 import us.kanddys.pov.admin.services.ProductService;
 import us.kanddys.pov.admin.services.storage.FirebaseStorageService;
 import us.kanddys.pov.admin.services.utils.ProductUtils;
@@ -46,6 +59,15 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
 
    @Autowired
    private AuxiliarProductJpaRepository auxiliarProductJpaRepository;
+
+   @Autowired
+   private AuxiliarProductSegmentJpaRepository auxiliarProductSegmentJpaRepository;
+
+   @Autowired
+   private AuxiliarProductQuestionJpaRepository auxiliarProductQuestionJpaRepository;
+
+   @Autowired
+   private AuxiliarProductKeywordJpaRepository auxiliarKeywordJpaRepository;
 
    @Autowired
    private AuxiliarProductKeywordJpaRepository auxiliarProductKeyWordJpaRepository;
@@ -66,18 +88,40 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
    private ProductSegmentJpaRepository productSegmentJpaRepository;
 
    @Autowired
+   private ProductSegmentService productSegmentService;
+
+   @Autowired
    private ProductService productService;
+
+   @Autowired
+   private ProductJpaRepository productJpaRepository;
+
+   @Autowired
+   private HashtagJpaRepository hashtagJpaRepository;
+
+   @Autowired
+   private KeywordService keywordService;
+
+   @Autowired
+   private ProductQuestionService productQuestionService;
+
+   @Autowired
+   private CategoryService categoryService;
+
+   @Autowired
+   private AuxiliarProductCategoryJpaRepository auxiliarProductCategoryJpaRepository;
 
    @Override
    public NewAuxiliarProductDTO createAuxiliarProduct(Optional<List<MultipartFile>> medias, Optional<String> title,
          Optional<String> tStock, Optional<String> price, Optional<String> stock, Optional<String> status,
-         Optional<String> userId, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
+         Optional<String> merchant, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
          Optional<String> invenstmentAmount, Optional<String> invenstmentTitle, Optional<String> manufacturingType,
          Optional<String> segmentTitle, Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia,
          Optional<String> hashtagValue, Optional<List<String>> keywordValues, Optional<String> productQuestionValue,
          Optional<String> productQuestionType, Optional<String> productQuestionLimit,
-         Optional<String> productQuestionRequired, Optional<List<String>> productQuestionOptions) {
-      if (userId.isEmpty()) {
+         Optional<String> productQuestionRequired, Optional<List<String>> productQuestionOptions,
+         Optional<String> categoryTitle) {
+      if (merchant.isEmpty()) {
          Long auxProductId;
          try {
             auxProductId = auxiliarProductJpaRepository.save(new AuxiliarProduct(null, null, title.get(),
@@ -133,6 +177,10 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
                });
             });
          }
+         if (categoryTitle.isPresent()) {
+            auxiliarProductCategoryJpaRepository
+                  .save(new AuxiliarProductCategory(null, auxProductId, categoryTitle.get()));
+         }
          return new NewAuxiliarProductDTO(auxProductId,
                uploadAuxiliarProductMedias(medias, auxProductId, (frontPage != null ? frontPage.getUrl() : null),
                      (frontPage != null ? frontPage.getType() : null), 0,
@@ -148,7 +196,7 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
                (!tStock.isEmpty() ? Optional.of(ProductUtils.determinateTypeOfStock(tStock.get()).toString())
                      : Optional.empty()),
                (!stock.isEmpty() ? stock : Optional.empty()), (!status.isEmpty() ? status : Optional.empty()),
-               (!userId.isEmpty() ? userId : Optional.empty()),
+               merchant.get(),
                (!manufacturingTime.isEmpty() ? manufacturingTime : Optional.empty()),
                Optional.empty(),
                Optional.empty(),
@@ -165,7 +213,8 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
                      ? productQuestionLimit
                      : Optional.empty()),
                (!productQuestionRequired.isEmpty() ? productQuestionRequired : Optional.empty()),
-               (!productQuestionOptions.isEmpty() ? productQuestionOptions : Optional.empty()));
+               (!productQuestionOptions.isEmpty() ? productQuestionOptions : Optional.empty()),
+               (!categoryTitle.isEmpty() ? categoryTitle : Optional.empty()));
          Map<String, Object> segmentAtributtes = null;
          ProductImageDTO productImageDTO = null;
          if (!segmentMedia.isEmpty()) {
@@ -232,6 +281,128 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
             productMediaJpaRepository.saveAll(imageProducts);
          });
          return articleProductMedias;
+      }
+   }
+
+   @Override
+   public Long updateAdminSellAssociation(Long productId, Long userId) {
+      Optional<AuxiliarProduct> auxiliarProduct = auxiliarProductJpaRepository.findById(productId);
+      Product product = null;
+      if (auxiliarProduct.isPresent()) {
+         product = null;
+         product = new Product(null, userId,
+               (auxiliarProduct.get().getFrontPage() != null ? auxiliarProduct.get().getFrontPage() : null),
+               (auxiliarProduct.get().getTitle() != null ? auxiliarProduct.get().getTitle() : null),
+               (auxiliarProduct.get().getPrice() != null ? auxiliarProduct.get().getPrice() : null),
+               (auxiliarProduct.get().getStock() != null ? auxiliarProduct.get().getStock() : null),
+               (auxiliarProduct.get().getStockType() != null ? auxiliarProduct.get().getStockType() : null),
+               (auxiliarProduct.get().getManufacturingType() != null ? auxiliarProduct.get().getManufacturingType()
+                     : null),
+               (auxiliarProduct.get().getManufacturingTime() != null ? auxiliarProduct.get().getManufacturingTime()
+                     : null),
+               (auxiliarProduct.get().getCreated() != null ? auxiliarProduct.get().getCreated() : null),
+               (auxiliarProduct.get().getUpdated() != null ? auxiliarProduct.get().getUpdated() : null),
+               (auxiliarProduct.get().getStatus() != null ? auxiliarProduct.get().getStatus() : null),
+               (auxiliarProduct.get().getSales() != null ? auxiliarProduct.get().getSales() : null));
+         product = productJpaRepository.save(product);
+         var auxiliarProductSegment = auxiliarProductSegmentJpaRepository.findById(productId);
+         List<String> auxiliarProductKeywords = auxiliarKeywordJpaRepository
+               .findKeywordsByIds(auxiliarProductKeyWordJpaRepository.findByProduct(productId));
+         var auxiliarProductCategory = auxiliarProductCategoryJpaRepository.findByProduct(productId);
+         var auxiliarProductQuestion = auxiliarProductQuestionJpaRepository.findByProduct(productId);
+         createProductExtraAtributes(Optional.of(product.getId().toString()),
+               // ! AGREGAR INVENTSMENT.
+               Optional.empty(),
+               Optional.empty(),
+               Optional.empty(),
+               Optional.empty(),
+               Optional.empty(),
+               Optional.empty(),
+               (auxiliarProduct.get().getHashtag() != null ? Optional.of(auxiliarProduct.get().getHashtag())
+                     : Optional.empty()),
+               (!auxiliarProductKeywords.isEmpty()
+                     ? Optional.of(auxiliarProductKeywords)
+                     : Optional.empty()),
+               (auxiliarProductQuestion.getQuestion() != null
+                     ? Optional.of(auxiliarProductQuestion.getQuestion())
+                     : Optional.empty()),
+               (auxiliarProductQuestion.getType() != null
+                     ? Optional.of(auxiliarProductQuestion.getType().toString())
+                     : Optional.empty()),
+               (auxiliarProductQuestion.getMaxLimit() != null
+                     ? Optional.of(auxiliarProductQuestion.getMaxLimit().toString())
+                     : Optional.empty()),
+               (auxiliarProductQuestion.getRequired() != null
+                     ? Optional.of(auxiliarProductQuestion.getRequired().toString())
+                     : Optional.empty()),
+               Optional.of(auxiliarMultipleQuestionOptionJpaRepository.findOptionsByQuestionId(productId)),
+               userId, (auxiliarProductCategory.getTitle() != null ? Optional.of(auxiliarProductCategory.getTitle())
+                     : Optional.empty()));
+         if (auxiliarProductSegment.isPresent()) {
+            productSegmentService.createProductSegmentMediaString(
+                  (auxiliarProductSegment.get().getTitle() != null
+                        ? Optional.of(auxiliarProductSegment.get().getTitle())
+                        : null),
+                  (auxiliarProductSegment.get().getMedia() != null
+                        ? Optional.of(auxiliarProductSegment.get().getMedia())
+                        : null),
+                  productId,
+                  (auxiliarProductSegment.get().getDescription() != null
+                        ? Optional.of(auxiliarProductSegment.get().getDescription())
+                        : Optional.empty()));
+         }
+      } else {
+         throw new ProductNotFoundException(ExceptionMessage.PRODUCT_NOT_FOUND);
+      }
+      // ! Borrado del producto auxiliar.
+      auxiliarMultipleQuestionOptionJpaRepository.deleteOptionsByProductId(productId);
+      auxiliarProductKeyWordJpaRepository.deleteWordsByProductId(productId);
+      auxiliarProductJpaRepository.deleteById(productId);
+      return product.getId();
+   }
+
+   /**
+    * @author Igirod0
+    * @version 1.0.0
+    */
+   private void createProductExtraAtributes(Optional<String> productId, Optional<String> invenstmentAmount,
+         Optional<String> invenstmentNote, Optional<String> invenstmentTitle, Optional<String> segmentTitle,
+         Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia, Optional<String> hashtagValue,
+         Optional<List<String>> keywords, Optional<String> sellerQuestionValue, Optional<String> sellerQuestionType,
+         Optional<String> sellerQuestionLimit, Optional<String> sellerQuestionRequired,
+         Optional<List<String>> sellerQuestionOptions, Long merchantId, Optional<String> categoryTitle) {
+      // ! MAS ADELANTE.
+      // if (invenstmentAmount.isPresent() || invenstmentNote.isPresent() ||
+      // invenstmentTitle.isPresent()) {
+      // invenstmentService.createInvenstment(Long.valueOf(productId.get()),
+      // Optional.of(Double.valueOf(invenstmentAmount.get())), invenstmentNote,
+      // invenstmentTitle);
+      // }
+      if (hashtagValue.isPresent()) {
+         hashtagJpaRepository.save(new Hashtag(null, Long.valueOf(productId.get()), hashtagValue.get(), merchantId));
+      }
+      if (keywords.isPresent()) {
+         keywordService.createKeywords(keywords.get(), merchantId, Long.valueOf(productId.get()));
+      }
+      if (sellerQuestionValue.isPresent() && sellerQuestionType.isPresent()) {
+         productQuestionService.createQuestion(sellerQuestionValue.get(),
+               (sellerQuestionRequired.isPresent() ? Optional.of(Integer.valueOf(sellerQuestionRequired.get())) : null),
+               sellerQuestionType.get(),
+               (sellerQuestionLimit.isPresent() ? Optional.of(Integer.valueOf(sellerQuestionLimit.get())) : null),
+               Long.valueOf(productId.get()),
+               sellerQuestionOptions);
+      }
+      if (segmentDescription.isPresent() || segmentMedia.isPresent() || segmentTitle.isPresent()) {
+         productSegmentService.createProductSegment(segmentTitle, segmentMedia, Long.valueOf(productId.get()),
+               segmentDescription);
+      }
+      if (categoryTitle.isPresent()) {
+         var categoryId = categoryService.getCategoryIdByTitle(categoryTitle.get());
+         if (categoryId == null) {
+            categoryService.cAdminCategory(categoryTitle.get(), merchantId);
+         } else {
+            categoryService.aAdminProductCategory(categoryId, List.of(Long.valueOf(productId.get())));
+         }
       }
    }
 }

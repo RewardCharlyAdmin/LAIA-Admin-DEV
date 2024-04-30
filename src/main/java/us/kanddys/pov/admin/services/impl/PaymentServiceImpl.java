@@ -20,11 +20,11 @@ public class PaymentServiceImpl implements PaymentService {
 
    @Override
    public Integer cAdminPayment(Optional<String> title, Optional<String> cvu, Optional<String> email,
-         Optional<Double> amount, Optional<String> amountType, Optional<String> payment, Long merchantId) {
+         Optional<Double> amount, Optional<String> amountType, Optional<String> payment, Long merchant) {
       paymentJpaRepository
             .save(new Payment(null, title.orElse(null), cvu.orElse(null), email.orElse(null), amount.orElse(null),
                   PaymentUtils.determinateProductQuestionType(amountType.orElse(null)), payment.orElse(null),
-                  merchantId));
+                  merchant));
       return 1;
    }
 

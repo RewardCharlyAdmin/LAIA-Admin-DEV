@@ -18,8 +18,8 @@ public class PaymentController {
    @MutationMapping
    public Integer cAdminPayment(@Argument Optional<String> title, @Argument Optional<String> cvu,
          @Argument Optional<String> email, @Argument Optional<Double> amount, @Argument Optional<String> amountType,
-         @Argument Optional<String> payment, @Argument Long merchantId) {
-      return paymentService.cAdminPayment(title, cvu, email, amount, amountType, payment, merchantId);
+         @Argument Optional<String> payment, @Argument Long merchant) {
+      return paymentService.cAdminPayment(title, cvu, email, amount, amountType, payment, merchant);
    }
 
    @MutationMapping

@@ -33,14 +33,13 @@ public class CategoryServiceImpl implements CategoryService {
    private ProductJpaRepository productJpaRepository;
 
    @Override
-   public Integer cAdminCategory(String category, Long merchant) {
+   public Long cAdminCategory(String category, Long merchant) {
       try {
-         categoryJpaRepository
-               .save(new Category(null, merchant, category, DateUtils.getCurrentDateWitheoutTime(), null));
+         return categoryJpaRepository
+               .save(new Category(null, merchant, category, DateUtils.getCurrentDateWitheoutTime(), null)).getId();
       } catch (ParseException e) {
          throw new RuntimeException("Error al convertir la fecha actual");
       }
-      return 1;
    }
 
    @Override
@@ -83,5 +82,10 @@ public class CategoryServiceImpl implements CategoryService {
       // ! Extraemos todos los ids de los productos registrados en una categoria.
       return productJpaRepository.findAllById(categoryProductJpaRepository.findAllByCategoryId(id)).stream()
             .map(ProductDTO::new).collect(Collectors.toSet());
+   }
+
+   @Override
+   public Long getCategoryIdByTitle(String string) {
+      return categoryJpaRepository.findByCategory(string).orElse(null).getId();
    }
 }
