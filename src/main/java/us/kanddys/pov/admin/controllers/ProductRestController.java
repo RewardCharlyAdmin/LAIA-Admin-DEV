@@ -25,7 +25,7 @@ public class ProductRestController {
          @RequestPart String merchantId,
          @RequestPart Optional<String> title, @RequestPart Optional<String> tStock,
          @RequestPart Optional<String> price, @RequestPart Optional<String> stock, @RequestPart Optional<String> status,
-         @RequestPart Optional<String> manufacturingTime, @RequestPart Optional<String> invenstmentNote,
+         @RequestPart Optional<String> manufacturing, @RequestPart Optional<String> invenstmentNote,
          @RequestPart Optional<String> invenstmentAmount, @RequestPart Optional<String> invenstmentTitle,
          @RequestPart Optional<String> manufacturingType, @RequestPart Optional<String> segmentTitle,
          @RequestPart Optional<String> segmentDescription, @RequestPart Optional<MultipartFile> segmentMedia,
@@ -34,7 +34,7 @@ public class ProductRestController {
          @RequestPart Optional<String> productQuestionLimit, @RequestPart Optional<String> productQuestionRequired,
          @RequestPart Optional<List<String>> productQuestionOptions, @RequestPart Optional<String> categoryTitle) {
       return productService.createProduct(frontPage, title, tStock, price, stock, status,
-            merchantId, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
+            merchantId, manufacturing, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue, keywordValue, productQuestionValue,
             productQuestionType, productQuestionLimit, productQuestionRequired, productQuestionOptions, categoryTitle);
    }

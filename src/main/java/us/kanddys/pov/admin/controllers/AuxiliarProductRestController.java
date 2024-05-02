@@ -26,7 +26,7 @@ public class AuxiliarProductRestController {
          @RequestPart Optional<String> merchant, @RequestPart Optional<String> title,
          @RequestPart Optional<String> tStock, @RequestPart Optional<String> price, @RequestPart Optional<String> stock,
          @RequestPart Optional<String> status,
-         @RequestPart Optional<String> manufacturingTime, @RequestPart Optional<String> invenstmentNote,
+         @RequestPart Optional<String> manufacturing, @RequestPart Optional<String> invenstmentNote,
          @RequestPart Optional<String> invenstmentAmount, @RequestPart Optional<String> invenstmentTitle,
          @RequestPart Optional<String> manufacturingType, @RequestPart Optional<String> segmentTitle,
          @RequestPart Optional<String> segmentDescription, @RequestPart Optional<MultipartFile> segmentMedia,
@@ -35,7 +35,7 @@ public class AuxiliarProductRestController {
          @RequestPart Optional<String> productQuestionLimit, @RequestPart Optional<String> productQuestionRequired,
          @RequestPart Optional<String> productQuestionOptions, @RequestPart Optional<String> categoryTitle) {
       return auxiliarProductService.createAuxiliarProduct(medias, title, tStock, price, stock, status,
-            merchant, manufacturingTime, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
+            merchant, manufacturing, invenstmentNote, invenstmentAmount, invenstmentTitle, manufacturingType,
             segmentTitle, segmentDescription, segmentMedia, hashtagValue,
             (keywords.isPresent()) ? Optional.of(List.of(keywords.get().split("♀")))
                   : Optional.empty(),

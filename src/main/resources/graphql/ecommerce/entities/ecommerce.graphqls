@@ -6,6 +6,7 @@
 #import "./entities/buyer.graphqls"
 #import "./entities/invoice.graphqls"
 #import "./entities/category.graphqls"
+#import "./entities/sqq.graphqls"
 
 type Query {
    gAdminSellCalendar(merchantId: Int!, year: Int!, month: Int!, day: Int!): CalendarDTO
@@ -19,6 +20,8 @@ type Query {
    gBatches(calendarId: Int!, day: String!, date: String!, exceptionalDate: Int): [BatchDTO]
    gAdminSellProduct(productId: Int!): DifferentProductDTO
    gAdminCategoryProducts(id: Int!): [ProductDTO]
+   sqqCheck(email: String): RCheckEmailDTO
+   sqqLogin(merchantId: Int!, password: String!): RLoginMerchantDTO
 }
 
 type Mutation {

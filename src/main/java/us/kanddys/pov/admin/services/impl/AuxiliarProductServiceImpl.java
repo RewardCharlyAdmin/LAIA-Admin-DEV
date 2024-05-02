@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.transaction.Transactional;
 import us.kanddys.pov.admin.exceptions.ProductNotFoundException;
 import us.kanddys.pov.admin.exceptions.utils.ExceptionMessage;
 import us.kanddys.pov.admin.models.AuxiliarMultipleQuestionOption;
@@ -111,10 +112,11 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
    @Autowired
    private AuxiliarProductCategoryJpaRepository auxiliarProductCategoryJpaRepository;
 
+   @Transactional(rollbackOn = { Exception.class, RuntimeException.class })
    @Override
    public NewAuxiliarProductDTO createAuxiliarProduct(Optional<List<MultipartFile>> medias, Optional<String> title,
          Optional<String> tStock, Optional<String> price, Optional<String> stock, Optional<String> status,
-         Optional<String> merchant, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
+         Optional<String> merchant, Optional<String> manufacturing, Optional<String> invenstmentNote,
          Optional<String> invenstmentAmount, Optional<String> invenstmentTitle, Optional<String> manufacturingType,
          Optional<String> segmentTitle, Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia,
          Optional<String> hashtagValue, Optional<List<String>> keywordValues, Optional<String> productQuestionValue,
@@ -131,7 +133,7 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
                   hashtagValue.get(),
                   (manufacturingType.isPresent() ? ProductUtils.determinateManufacturingType(manufacturingType.get())
                         : null),
-                  Integer.parseInt(manufacturingTime.get()),
+                  (manufacturing.isPresent() ? Integer.parseInt(manufacturing.get()) : null),
                   DateUtils.getCurrentDate(), DateUtils.getCurrentDate(), Integer.parseInt(status.get()), 0)).getId();
          } catch (ParseException e) {
             throw new RuntimeException("Error al parsear la fecha.");
@@ -162,20 +164,31 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
                   .map(keyword -> new AuxiliarProductKeyword(null, keyword, auxProductId, null))
                   .collect(Collectors.toList()));
          }
-         if (productQuestionType.isPresent() &&
-               productQuestionType.get().equals("MULTIPLE")) {
-            // ! Agregar la pregunta primero.
-            auxiliarMultipleQuestionJpaRepository
-                  .save(new AuxiliarProductQuestion(null, auxProductId, productQuestionValue.get(),
-                        ProductUtils.determinateProductQuestionType(productQuestionType.get()),
-                        Integer.parseInt(productQuestionLimit.get()), Integer.parseInt(productQuestionRequired.get())));
-            productQuestionOptions.ifPresent(options -> {
-               options.forEach(option -> {
-                  // ! Se agrega cada opción de la pregunta multiple.
-                  auxiliarMultipleQuestionOptionJpaRepository
-                        .save(new AuxiliarMultipleQuestionOption(null, auxProductId, option));
+         if (productQuestionType.isPresent()) {
+            auxiliarProductQuestionJpaRepository
+                  .save(new AuxiliarProductQuestion(null, auxProductId,
+                        (productQuestionValue.get() != null ? productQuestionValue.get() : null),
+                        (productQuestionType.get() != null
+                              ? ProductUtils.determinateProductQuestionType(productQuestionType.get())
+                              : null),
+                        (productQuestionLimit.isPresent() ? Integer.parseInt(productQuestionLimit.get()) : null),
+                        (productQuestionRequired.isPresent() ? Integer.parseInt(productQuestionRequired.get())
+                              : null)));
+            if (productQuestionType.get().equals("MULTIPLE")) {
+               // ! Agregar la pregunta primero.
+               auxiliarMultipleQuestionJpaRepository
+                     .save(new AuxiliarProductQuestion(null, auxProductId, productQuestionValue.get(),
+                           ProductUtils.determinateProductQuestionType(productQuestionType.get()),
+                           Integer.parseInt(productQuestionLimit.get()),
+                           Integer.parseInt(productQuestionRequired.get())));
+               productQuestionOptions.ifPresent(options -> {
+                  options.forEach(option -> {
+                     // ! Se agrega cada opción de la pregunta multiple.
+                     auxiliarMultipleQuestionOptionJpaRepository
+                           .save(new AuxiliarMultipleQuestionOption(null, auxProductId, option));
+                  });
                });
-            });
+            }
          }
          if (categoryTitle.isPresent()) {
             auxiliarProductCategoryJpaRepository
@@ -192,12 +205,13 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
          // ! directamente el articulo.
          ProductDTO newProductDTO = productService.createProduct(
                (!medias.isEmpty() ? Optional.of(medias.get().get(0)) : Optional.empty()),
-               (!title.isEmpty() ? title : Optional.empty()), (!price.isEmpty() ? price : Optional.empty()),
+               (!title.isEmpty() ? title : Optional.empty()),
                (!tStock.isEmpty() ? Optional.of(ProductUtils.determinateTypeOfStock(tStock.get()).toString())
                      : Optional.empty()),
+               (!price.isEmpty() ? price : Optional.empty()),
                (!stock.isEmpty() ? stock : Optional.empty()), (!status.isEmpty() ? status : Optional.empty()),
                merchant.get(),
-               (!manufacturingTime.isEmpty() ? manufacturingTime : Optional.empty()),
+               (!manufacturing.isEmpty() ? manufacturing : Optional.empty()),
                Optional.empty(),
                Optional.empty(),
                Optional.empty(),
@@ -298,7 +312,7 @@ public class AuxiliarProductServiceImpl implements AuxiliarProductService {
                (auxiliarProduct.get().getStockType() != null ? auxiliarProduct.get().getStockType() : null),
                (auxiliarProduct.get().getManufacturingType() != null ? auxiliarProduct.get().getManufacturingType()
                      : null),
-               (auxiliarProduct.get().getManufacturingTime() != null ? auxiliarProduct.get().getManufacturingTime()
+               (auxiliarProduct.get().getManufacturing() != null ? auxiliarProduct.get().getManufacturing()
                      : null),
                (auxiliarProduct.get().getCreated() != null ? auxiliarProduct.get().getCreated() : null),
                (auxiliarProduct.get().getUpdated() != null ? auxiliarProduct.get().getUpdated() : null),

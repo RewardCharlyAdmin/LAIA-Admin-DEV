@@ -99,12 +99,12 @@ public class ProductServiceImpl implements ProductService {
    @Override
    public ProductDTO createProduct(Optional<MultipartFile> frontPage, Optional<String> title,
          Optional<String> tStock, Optional<String> price, Optional<String> stock, Optional<String> status,
-         String merchantId, Optional<String> manufacturingTime, Optional<String> invenstmentNote,
+         String merchantId, Optional<String> manufacturing, Optional<String> invenstmentNote,
          Optional<String> invenstmentAmount, Optional<String> invenstmentTitle, Optional<String> manufacturingType,
          Optional<String> segmentTitle, Optional<String> segmentDescription, Optional<MultipartFile> segmentMedia,
-         Optional<String> hashtagValue, Optional<List<String>> keywords, Optional<String> sellerQuestionValue,
-         Optional<String> sellerQuestionType, Optional<String> sellerQuestionLimit,
-         Optional<String> sellerQuestionRequired, Optional<List<String>> sellerQuestionOptions,
+         Optional<String> hashtagValue, Optional<List<String>> keywords, Optional<String> productQuestionValue,
+         Optional<String> productQuestionType, Optional<String> productQuestionLimit,
+         Optional<String> productQuestionRequired, Optional<List<String>> productQuestionOptions,
          Optional<String> categoryTitle) {
       Long existMerchantId = merchantJpaRepository.existById(Long.valueOf(merchantId))
             .orElseThrow(() -> new MerchantNotFoundException(
@@ -116,19 +116,19 @@ public class ProductServiceImpl implements ProductService {
                new Product(null, existMerchantId, null,
                      (!title.isPresent() ? null : title.get()),
                      (!price.isPresent() ? null : Double.valueOf(price.get().toString())),
-                     (!stock.isPresent() ? null : Integer.valueOf(stock.get())),
+                     (!stock.isPresent() ? null : Integer.valueOf(stock.get().toString())),
                      (!tStock.isPresent() ? null
                            : (tStock.get().equals("PACKAGE") ? StockTypeEnum.PACKAGE : StockTypeEnum.UNIT)),
                      (!manufacturingType.isPresent() ? null
                            : ProductUtils.determinateManufacturingType(manufacturingType.get())),
-                     (!manufacturingTime.isPresent() ? null : Integer.valueOf(manufacturingTime.get())),
+                     (!manufacturing.isPresent() ? null : Integer.valueOf(manufacturing.get())),
                      DateUtils.getCurrentDateWitheoutTime(), null,
                      (!status.isPresent() ? null : Integer.valueOf(status.get())), 0),
                (!frontPage.isPresent() ? null : frontPage.get()));
          createProductExtraAtributes(Optional.of(newProductDTO.getId().toString()),
                invenstmentAmount, invenstmentNote, invenstmentTitle, segmentTitle,
-               segmentDescription, segmentMedia, hashtagValue, keywords, sellerQuestionValue,
-               sellerQuestionType, sellerQuestionLimit, sellerQuestionRequired, sellerQuestionOptions,
+               segmentDescription, segmentMedia, hashtagValue, keywords, productQuestionValue,
+               productQuestionType, productQuestionLimit, productQuestionRequired, productQuestionOptions,
                existMerchantId, categoryTitle);
       } catch (ParseException e) {
          throw new RuntimeException("Error al convertir la fecha");
@@ -182,7 +182,8 @@ public class ProductServiceImpl implements ProductService {
       if (categoryTitle.isPresent()) {
          var categoryId = categoryJpaRepository.findByCategory(categoryTitle.get()).map(t -> t.getId()).orElse(null);
          if (categoryId == null) {
-            categoryService.aAdminProductCategory(categoryService.cAdminCategory(categoryTitle.get(), merchantId), List.of(Long.valueOf(productId.get())));
+            categoryService.aAdminProductCategory(categoryService.cAdminCategory(categoryTitle.get(), merchantId),
+                  List.of(Long.valueOf(productId.get())));
          } else {
             categoryService.aAdminProductCategory(categoryId, List.of(Long.valueOf(productId.get())));
          }

@@ -66,7 +66,7 @@ public class ProductUtils {
       switch (productQuestionType) {
          case "TXT":
             return QuestionTypeEmun.TXT;
-         case "MULTI":
+         case "MULTIPLE":
             return QuestionTypeEmun.MULTI;
          case "TIME":
             return QuestionTypeEmun.TIME;

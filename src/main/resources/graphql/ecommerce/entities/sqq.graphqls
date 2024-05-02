@@ -1,0 +1,10 @@
+type RCheckEmailDTO {
+   slug: String
+   merchantId: Int!
+}
+
+type RLoginMerchantDTO {
+   status: Int!
+   logo: String
+   phone: String
+}

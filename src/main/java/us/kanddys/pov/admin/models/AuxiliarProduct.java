@@ -17,7 +17,7 @@ import us.kanddys.pov.admin.models.utils.enums.StockTypeEnum;
 
 /**
  * @author Igirod0
- * @version 1.0.0
+ * @version 1.0.1
  */
 @AllArgsConstructor
 @Data
@@ -41,10 +41,11 @@ public class AuxiliarProduct {
    private StockTypeEnum stockType;
    @Column(name = "hashtag")
    private String hashtag;
+   @Enumerated(EnumType.STRING)
    @Column(name = "manufacturing_type")
    private ManufacturingTypeEnum manufacturingType;
-   @Column(name = "manufacturing_time")
-   private Integer manufacturingTime;
+   @Column(name = "manufacturing")
+   private Integer manufacturing;
    @Column(name = "created")
    private Date created;
    @Column(name = "updated")
