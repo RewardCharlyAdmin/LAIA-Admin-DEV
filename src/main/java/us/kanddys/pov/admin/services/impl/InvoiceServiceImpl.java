@@ -225,7 +225,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             newUser.setPhone((phone == null) ? null : phone);
             newUser.setName((name == null) ? null : name);
             newUser.setSurname((surname == null) ? null : surname);
-            newUser.setReference(setUserReference(email, name, surname, phone));
+            newUser.setReference(setUserReference(name, surname, phone));
             return newUser;
          }
       }
@@ -235,9 +235,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     * @author Igirod0
     * @version 1.0.0
     */
-   private String setUserReference(String email, String name, String surname, String phone) {
-      return (email != null) ? email
-            : (name != null) ? name : (surname != null) ? surname : (phone != null) ? phone : null;
+   private String setUserReference(String name, String surname, String phone) {
+      return (name != null) ? name : (surname != null) ? surname : (phone != null) ? phone : null;
    }
 
    @Override
