@@ -38,7 +38,7 @@ public class LibraryServiceImpl implements LibraryService {
    private BuyerLibraryService buyerLibraryService;
 
    @Override
-   public Map<String, Object> gAdminSellLibrary(Long userId, Long libraryId) {
+   public Map<String, Object> gAdminSellLibrary(Long merchant, Long libraryId) {
       Map<String, Object> response = new HashMap<String, Object>();
       List<Map<String, Object>> collections = new ArrayList<Map<String, Object>>();
       Optional<Library> library = libraryJpaRepository.findById(libraryId);
@@ -46,14 +46,14 @@ public class LibraryServiceImpl implements LibraryService {
          throw new LibraryNotFoundException(ExceptionMessage.LIBRARY_NOT_FOUND);
       }
       // ! VALIDACIÓN: SI EL USUARIO ENVIADO ES EL MISMO QUE EL DE LA BIBLIOTECA.
-      if (!library.get().getUserId().equals(userId)) {
+      if (!library.get().getMerchant().equals(merchant)) {
          response.put("operation", 0);
          return response;
       }
       // * Propiedades generales.
       response.put("title", (library.get().getTitle() == null ? null : library.get().getTitle()));
       response.put("type", library.get().getTypeCollection());
-      response.put("count", buyerJpaRepository.findCountBuyersByUserId(userId));
+      response.put("count", buyerJpaRepository.findCountBuyersByUserId(merchant));
       response.put("operation", 1);
       switch (library.get().getTypeCollection()) {
          case 1:
@@ -83,7 +83,7 @@ public class LibraryServiceImpl implements LibraryService {
                                  ? libraryCollection.getMiniatureSubtitle().split(" ")
                                  : null),
                            libraryCollection.getOrdering(),
-                           libraryCollection.getAscDsc(), userId, 1, 10));
+                           libraryCollection.getAscDsc(), merchant, 1, 10));
                collectionData.put("count",
                      buyerLibraryService.gBuyerLibraryCollectionTotalItems(libraryCollection.getId(),
                            (libraryCollection.getMiniatureHeader() != null
@@ -96,7 +96,7 @@ public class LibraryServiceImpl implements LibraryService {
                                  ? libraryCollection.getMiniatureSubtitle().split(" ")
                                  : null),
                            libraryCollection.getOrdering(),
-                           libraryCollection.getAscDsc(), userId));
+                           libraryCollection.getAscDsc(), merchant));
                collections.add(collectionData);
             }
             break;

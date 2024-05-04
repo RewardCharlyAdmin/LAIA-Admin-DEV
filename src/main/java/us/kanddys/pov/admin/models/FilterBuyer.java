@@ -24,8 +24,8 @@ public class FilterBuyer {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "collection_id")
-   private Long collectionId;
+   @Column(name = "collection")
+   private Long collection;
    @Column(name = "from_date")
    private Date from;
    @Column(name = "to_date")
@@ -38,6 +38,22 @@ public class FilterBuyer {
    private Double priceMin;
    @Column(name = "price_max")
    private Double priceMax;
+   @Column(name = "total_min")
+   private Double totalMin;
+   @Column(name = "total_max")
+   private Double totalMax;
+   @Column(name = "totals_min")
+   private Double totalsMin;
+   @Column(name = "totals_max")
+   private Double totalsMax;
+   @Column(name = "count_product_min")
+   private Integer countProductMin;
+   @Column(name = "count_product_max")
+   private Integer countProductMax;
+   @Column(name = "count_product_total_min")
+   private Integer countProductTotalMin;
+   @Column(name = "count_product_total_max")
+   private Integer countProductTotalMax;
    @Column(name = "alias")
    private String alias;
 

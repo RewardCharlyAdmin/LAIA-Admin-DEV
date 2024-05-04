@@ -83,12 +83,12 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
    }
 
    @Override
-   public LibraryCollectionOrderDTO gCollectionOrder(Long collectionId, Long libraryId, Long userId) {
+   public LibraryCollectionOrderDTO gCollectionOrder(Long collectionId, Long libraryId, Long merchant) {
       Library library = libraryJpaRepository.findById(libraryId)
             .orElseThrow(() -> new LibraryNotFoundException(ExceptionMessage.LIBRARY_NOT_FOUND));
       LibraryCollection libraryCollection = libraryCollectionJpaRepository.findById(collectionId)
             .orElseThrow(() -> new LibraryCollectionNotFoundException(ExceptionMessage.LIBRARY_COLLECTION_NOT_FOUND));
-      if (!library.getUserId().equals(userId)) {
+      if (!library.getMerchant().equals(merchant)) {
          return new LibraryCollectionOrderDTO(null, null, 0, new HashSet<>());
       }
       Set<String> orderingSet = Arrays.stream(libraryCollection.getOrdering().split(" "))
@@ -101,13 +101,13 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
    }
 
    @Override
-   public LibraryCollectionConfigurationDTO gCollectionConfiguration(Long collectionId, Long libraryId, Long userId) {
+   public LibraryCollectionConfigurationDTO gCollectionConfiguration(Long collectionId, Long libraryId, Long merchant) {
       LibraryCollectionConfigurationDTO newLibraryCollectionConfigurationDTO = new LibraryCollectionConfigurationDTO();
       LibraryCollection libraryCollection = libraryCollectionJpaRepository.findById(collectionId)
             .orElseThrow(() -> new LibraryCollectionNotFoundException(ExceptionMessage.LIBRARY_COLLECTION_NOT_FOUND));
       Library library = libraryJpaRepository.findById(libraryCollection.getLibraryId())
             .orElseThrow(() -> new LibraryNotFoundException(ExceptionMessage.LIBRARY_NOT_FOUND));
-      if (!library.getUserId().equals(userId)) {
+      if (!library.getMerchant().equals(merchant)) {
          newLibraryCollectionConfigurationDTO.setOperation(0);
          return newLibraryCollectionConfigurationDTO;
       }
@@ -160,9 +160,10 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
       collectionData.put("miniatureHeader", libraryCollection.getMiniatureHeader().split(" "));
       collectionData.put("miniatureTitle", libraryCollection.getMiniatureTitle().split(" "));
       collectionData.put("miniatureSubtitle", libraryCollection.getMiniatureSubtitle().split(" "));
-      getCollectionCountItemsByType(library.getTypeCollection(), library.getUserId(), libraryCollection,
+      getCollectionCountItemsByType(library.getTypeCollection(), library.getMerchant(), libraryCollection,
             collectionData);
-      getCollectionItemsByTypeAndPageAndMaxResults(library.getTypeCollection(), library.getUserId(), libraryCollection,
+      getCollectionItemsByTypeAndPageAndMaxResults(library.getTypeCollection(), library.getMerchant(),
+            libraryCollection,
             collectionData, 10, 1);
       return collectionData;
    }
@@ -171,7 +172,7 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
     * @author Igirod0
     * @version 1.0.0
     */
-   private void getCollectionCountItemsByType(Integer typeCollection, Long userId,
+   private void getCollectionCountItemsByType(Integer typeCollection, Long merchant,
          LibraryCollection libraryCollection, Map<String, Object> collectionData) {
       String[] miniatureHeader = libraryCollection.getMiniatureHeader() != null
             ? libraryCollection.getMiniatureHeader().split(" ")
@@ -191,7 +192,7 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
                   miniatureSubtitle,
                   libraryCollection.getOrdering(),
                   libraryCollection.getAscDsc(),
-                  userId);
+                  merchant);
             collectionData.put("count", count);
             break;
          default:
@@ -203,7 +204,7 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
     * @author Igirod0
     * @version 1.0.0
     */
-   private void getCollectionItemsByTypeAndPageAndMaxResults(Integer typeCollection, Long userId,
+   private void getCollectionItemsByTypeAndPageAndMaxResults(Integer typeCollection, Long merchant,
          LibraryCollection libraryCollection, Map<String, Object> collectionData, Integer maxResults, Integer page) {
       switch (typeCollection) {
          case 1:
@@ -220,7 +221,7 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
                               : null,
                         libraryCollection.getOrdering(),
                         libraryCollection.getAscDsc(),
-                        userId, page, maxResults));
+                        merchant, page, maxResults));
             break;
          default:
             break;
@@ -228,12 +229,12 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
    }
 
    @Override
-   public Map<String, Object> gCollection(Long collectionId, Long libraryId, Long userId) {
+   public Map<String, Object> gCollection(Long collectionId, Long libraryId, Long merchant) {
       Library library = libraryJpaRepository.findById(libraryId)
             .orElseThrow(() -> new LibraryNotFoundException(ExceptionMessage.LIBRARY_NOT_FOUND));
       LibraryCollection libraryCollection = libraryCollectionJpaRepository.findById(collectionId)
             .orElseThrow(() -> new LibraryCollectionNotFoundException(ExceptionMessage.LIBRARY_COLLECTION_NOT_FOUND));
-      if (!library.getUserId().equals(userId)) {
+      if (!library.getMerchant().equals(merchant)) {
          Map<String, Object> response = new HashMap<>();
          response.put("operation", 0);
          return response;
@@ -252,8 +253,8 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
       collectionData.put("miniatureHeader", miniatureHeader);
       collectionData.put("miniatureTitle", miniatureTitle);
       collectionData.put("miniatureSubtitle", miniatureSubtitle);
-      getCollectionCountItemsByType(library.getTypeCollection(), userId, libraryCollection, collectionData);
-      getCollectionItemsByTypeAndPageAndMaxResults(library.getTypeCollection(), userId, libraryCollection,
+      getCollectionCountItemsByType(library.getTypeCollection(), merchant, libraryCollection, collectionData);
+      getCollectionItemsByTypeAndPageAndMaxResults(library.getTypeCollection(), merchant, libraryCollection,
             collectionData, 10, 1);
       Map<String, Object> response = new HashMap<>();
       response.put("collection", collectionData);
@@ -272,7 +273,7 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
       response.put("libraryId", library.getId());
       getCollectionItemsByTypeAndPageAndMaxResults(
             library.getTypeCollection(),
-            library.getUserId(),
+            library.getMerchant(),
             libraryCollection,
             response,
             10,
@@ -291,12 +292,12 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
    }
 
    @Override
-   public LibraryCollectionMiniatureDTO gCollectionMiniature(Long collectionId, Long libraryId, Long userId) {
+   public LibraryCollectionMiniatureDTO gCollectionMiniature(Long collectionId, Long libraryId, Long merchant) {
       Library library = libraryJpaRepository.findById(libraryId)
             .orElseThrow(() -> new LibraryNotFoundException(ExceptionMessage.LIBRARY_NOT_FOUND));
       LibraryCollection libraryCollection = libraryCollectionJpaRepository.findById(collectionId)
             .orElseThrow(() -> new LibraryCollectionNotFoundException(ExceptionMessage.LIBRARY_COLLECTION_NOT_FOUND));
-      if (!library.getUserId().equals(userId)) {
+      if (!library.getMerchant().equals(merchant)) {
          return new LibraryCollectionMiniatureDTO(null, 0, null);
       }
       String[] miniature = library.getMiniature() != null ? library.getMiniature().split(" ") : null;
@@ -342,7 +343,7 @@ public class LibraryCollectionServiceImpl implements LibraryCollectionService {
       LibraryCollection libraryCollection = libraryCollectionJpaRepository
             .findById(createCollectionBodyDTO.getCollectionId())
             .orElseThrow(() -> new LibraryCollectionNotFoundException(ExceptionMessage.LIBRARY_COLLECTION_NOT_FOUND));
-      if (!library.getUserId().equals(createCollectionBodyDTO.getUserId())) {
+      if (!library.getMerchant().equals(createCollectionBodyDTO.getUserId())) {
          throw new LibraryUserNotEqualException(ExceptionMessage.LIBRARY_USER_NOT_EQUAL);
       }
       Integer duplicateCollectionCount = libraryCollectionJpaRepository.countByLibraryIdAndTitle(

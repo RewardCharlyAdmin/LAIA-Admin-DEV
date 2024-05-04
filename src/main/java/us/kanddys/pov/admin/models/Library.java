@@ -22,8 +22,8 @@ public class Library {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Long id;
-   @Column(name = "user_id")
-   private Long userId;
+   @Column(name = "merchant")
+   private Long merchant;
    @Column(name = "type_collection")
    private Integer typeCollection;
    @Column(name = "miniature")
